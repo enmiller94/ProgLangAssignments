@@ -13,6 +13,9 @@
    order (and just keeps the first in place).
    It should have type: int * int * int -> int * int * int
 *)
+let fixLastTwo (x, y, z): int*int*int =
+	if y > z then (x, z, y)
+	else (x, y, z)
 
 
 (*
@@ -21,6 +24,11 @@
    You may want to use the function from the previous part.
    It should have type: int * int * int -> int * int * int
 *)
+let order ((x, y, z): int*int*int) = 
+	fixLastTwo(x, y, z)
+	if x > y then (y, x, z)
+	else if x > z then (y, z, x)
+	else (y, z, x)
 
 
 (*
@@ -29,8 +37,9 @@
    as is the distance between 4 and 10.
    It should have type: int * int -> int
 *)
-
-
+let distance (x:int, y:int) = 
+	if x > y then x-y
+	else y -x
 
 
 (*
@@ -41,7 +50,8 @@
    It should have type: int * string -> string
    You may see "bytes" instead of "string" as a type.
 *)
-
+let greeting (age:int, name:string) =
+	"Greetings " + name + ", you are " + age + " years old!"
 
 
 (*
@@ -54,7 +64,11 @@
    It should have type: int * string -> string
    You may see "bytes" instead of "string" as a type.
 *)
-
+let greeting2 (age: int, name: string) = 
+	"Greetings " + name + ", you are " +
+	if age = 0 then "not born yet!"
+	else if age >= 1 && age <=20 then "a youngster!"
+	else if age > 20 then "young at heart!"
 
 
 (*
@@ -64,7 +78,8 @@
    a string.
    It should have type: int * string -> bool
 *)
-
+let tooShort (i: int, s:string) = 
+	i > s.length
 
 
 (*
@@ -72,7 +87,8 @@
    their total length.
    It should have type string * string -> int
 *)
-
+let totalLength (s1:string, s2:string) =
+	s1.length + s2.length
 
 
 
@@ -83,7 +99,12 @@
    string more than once.
    It should have type: string * string * string -> bool
 *)
+let orderedByLength ((x, y, z): strings*strings*strings) = 
+	let x_l = x.length
+	let y_l = y.length
+	let z_l = z.length
 
+	x_l < y_l && y_l < z_l
 
 
 
@@ -94,4 +115,8 @@
    integers more than once.
    It should have type: int * int -> bool
 *)
+let prodInRange (x:int, y:int) =
+	let prod = x*y
 
+	if prod > 10 && prod < 20 then true
+	else false
