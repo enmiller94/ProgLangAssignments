@@ -13,7 +13,8 @@
    the list does not have n elements, it should raise an exception (Failure "getnth").
    It should have type: int * string list -> string
 *)
-
+let getnth ((n, strings): int * string list) =
+	("hello")
 
 
 (*
@@ -24,7 +25,8 @@
    pair then it returns "None".
    It should have type: string * (string * int) list -> int option
 *)
-
+let lookup (s, listStrings): string * (string * int) list = 
+	("string", ["string", 5])
 
 
 
@@ -36,7 +38,8 @@
    inPairs [1; 2; 3; 4; 5] = [(1, 2); (3, 4)]
    It should have type: int list -> (int * int) list
 *)
-
+let inPairs (([integers]): int list) = 
+	[(5, 10)]
 
 
 
@@ -47,7 +50,8 @@
    flatten [[1; 2; 3]; []; [4; 5]; [6]] = [1; 2; 3; 4; 5; 6]
    It should have type: int list list -> int list
 *)
-
+let flatten ((lists): int list list) =
+	[5]
 
 
 (*
@@ -55,7 +59,8 @@
    list of integers, and removes from that list any occurrence of n.
    It should have type: int * int list -> int list
 *)
-
+let remove ((n, listy): int * int list) =
+	[5]
 
 
 (*
@@ -65,7 +70,8 @@
    removeDups [4; 1; 2; 1; 4; 5; 20] = [4; 1; 2; 5; 20]
    It should have type: int list -> int list
 *)
-
+let removeDups ((listy): int list) =
+	[5]
 
 
 
@@ -76,7 +82,8 @@
    collateSome [Some 1; None; Some 2; Some 1; None; Some 3] = [1; 2; 1; 3]
    It should have type: int option list -> int list
 *)
-
+let collateSome ((listOptions): int option list) =
+	[5]
 
 
 
@@ -87,7 +94,8 @@
    unzip2 [(1, 2); (3, 4); (5, 6)] = ([1; 3; 5], [2; 4; 6])
    It should have type: (int * int) list -> int list * int list
 *)
-
+let unzip2 ((intPairList): (int * int) list) =
+	([5], [10])
 
 
 
@@ -105,5 +113,5 @@
    write some good tests of this behavior.
    It should have type: int * int list -> int list option
 *)
-
-
+let makeChange ((n, listDecr): int * int list) = 
+	Some [5; 10]
