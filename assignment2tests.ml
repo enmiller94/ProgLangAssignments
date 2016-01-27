@@ -45,6 +45,9 @@ let t5d = remove (34, [3; 4; 3; 1]) = [3; 4; 3; 1]
 
 
 let t6a = removeDups [4; 1; 2; 1; 4; 5; 20] = [4; 1; 2; 5; 20]
+let t6b = removeDups [1; 2; 3; 4; 5; 6; 7; 8] = [1; 2; 3; 4; 5; 6; 7; 8]
+let t6c = removeDups [1; 1; 1; 1] = [1]
+let t6d = removeDups [] = []
 
 
 let t7a = collateSome [Some 1; None; Some 2; Some 1; None; Some 3] = [1; 2; 1; 3]
