@@ -13,6 +13,9 @@ let t1f = try (getnth (0, ["hi"; "there"; "you"]); false) with
 
 let t2a = lookup ("you", []) = None
 let t2b = lookup ("you", [("him", 2); ("you", 3)]) = Some 3
+let t2c = lookup ("you", [("him", 2); ("you", 3); ("you", 54)]) = Some 3
+let t2d = lookup ("him", [("him", 2); ("you", 3); ("him", 34)]) = Some 2
+let t2e = lookup ("dfas", [("him", 2); ("you", 3)]) = None
 
 
 let t3a = inPairs [1; 2; 3; 4; 5] = [(1, 2); (3, 4)]
