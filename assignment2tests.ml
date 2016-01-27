@@ -51,6 +51,9 @@ let t6d = removeDups [] = []
 
 
 let t7a = collateSome [Some 1; None; Some 2; Some 1; None; Some 3] = [1; 2; 1; 3]
+let t7b = collateSome [None; None; None] = []
+let t7c = collateSome [Some 1; Some 2; Some 1; Some 3] = [1; 2; 1; 3]
+let t7d = collateSome [Some 12; None; None; Some 1; None; None] = [12; 1]
 
 
 let t8a = unzip2 [(1, 2); (3, 4); (5, 6)] = ([1; 3; 5], [2; 4; 6])
