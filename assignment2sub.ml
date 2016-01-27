@@ -15,10 +15,11 @@
 *)
 let rec getnth ((n, lst): int * string list) =
 	match lst with
+	| []-> raise (Failure "getnth")
 	| element::rest -> if n = 1 
 					   then element 
 					   else getnth(n-1,rest)
-	| []-> raise (Failure "getnth")
+
 
 
 (*
@@ -31,10 +32,11 @@ let rec getnth ((n, lst): int * string list) =
 *)
 let rec lookup ((s, lst): string * (string * int) list) = 
 	match lst with
-	| (element_1, element_2)::rest -> if element_1 = s 
-					   then Some element_2
-					   else lookup (s, rest)
 	| [] -> None 
+	| (element_1, element_2)::rest -> if element_1 = s 
+					   				  then Some element_2
+					   				  else lookup (s, rest)
+
 
 
 
@@ -49,7 +51,7 @@ let rec lookup ((s, lst): string * (string * int) list) =
 let rec inPairs ((lstInt): int list) = 
 	match lstInt with
 	| [] -> []
-	| a::b::rest -> (a, b)::inPairs (rest)
+	| a::b::rest -> (a, b)::inPairs rest
 	| a::rest -> []
 	
 	
@@ -67,8 +69,8 @@ let rec flatten ((lst): int list list) =
 	match lst with
 	| []-> []
 	| a::rest -> if a = [] 
-				 then flatten (rest) 
-				 else a @ flatten (rest)
+				 then flatten rest
+				 else a @ flatten rest
 
 
 
@@ -95,7 +97,7 @@ let rec remove ((n, lstInt): int * int list) =
 let rec removeDups ((lst): int list) =
 	match lst with 
 	| [] -> []
-	| a::rest -> a::remove (a, removeDups (rest))
+	| a::rest -> a::remove (a, removeDups rest)
 
 
 
@@ -110,8 +112,8 @@ let rec removeDups ((lst): int list) =
 let rec collateSome ((lstOpt): int option list) =
 	match lstOpt with
 	| [] -> []
-	| Some a::rest -> a::collateSome(rest)
-	| None::rest -> collateSome (rest)
+	| Some a::rest -> a::collateSome rest
+	| None::rest -> collateSome rest
 
 
 
@@ -125,8 +127,7 @@ let rec collateSome ((lstOpt): int option list) =
 let rec unzip2 ((lst): (int * int) list) =
 	match lst with
 	| [] ->  ([],[])
-	| (a, b)::rest -> let first, second = unzip2 rest in 
-					  a::first, b::second
+	| (a, b)::rest -> let first, second = unzip2 rest in a::first, b::second
 
 
 
@@ -146,11 +147,11 @@ let rec unzip2 ((lst): (int * int) list) =
    It should have type: int * int list -> int list option
 *)
 let rec makeChange ((n, lstDecr): int * int list) = 
-	Some [5; 10]
-	(*match lstDecr with
-	| [] -> []
-	| a::rest -> if n - a >= 0 
-				 then a::makeChange (n-a, lstDecr)
-				 else if n - a = 0
-				 then Some (a::lstFin)
-				 else makeChange (n, rest)*)
+	let lstEnd = [] in 
+		match lstDecr with 
+		| [] -> None 
+		| a::rest -> if n - a = 0 
+			     then Some (a::lstEnd)
+			     else if n - a < 0 
+			     then makeChange (n, rest) 
+			     else let x = makeChange (n - a, lstDecr) in Some (a::lstEnd)
