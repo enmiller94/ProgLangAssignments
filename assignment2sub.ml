@@ -13,8 +13,12 @@
    the list does not have n elements, it should raise an exception (Failure "getnth").
    It should have type: int * string list -> string
 *)
-let getnth ((n, strings): int * string list) =
-	("hello")
+let rec getnth ((n, lst): int * string list) =
+	match lst with
+	| element::rest -> if n = 1 
+					   then element 
+					   else getnth(n-1,rest)
+	| []-> raise (Failure "getnth")
 
 
 (*
@@ -25,8 +29,12 @@ let getnth ((n, strings): int * string list) =
    pair then it returns "None".
    It should have type: string * (string * int) list -> int option
 *)
-let lookup (s, listStrings): string * (string * int) list = 
-	("string", ["string", 5])
+let rec lookup ((s, lst): string * (string * int) list) = 
+	match lst with
+	| (element_1, element_2)::rest -> if element_1 = s 
+					   then Some element_2
+					   else lookup (s, rest)
+	| [] -> None 
 
 
 
@@ -38,8 +46,13 @@ let lookup (s, listStrings): string * (string * int) list =
    inPairs [1; 2; 3; 4; 5] = [(1, 2); (3, 4)]
    It should have type: int list -> (int * int) list
 *)
-let inPairs (([integers]): int list) = 
-	[(5, 10)]
+let rec inPairs ((lstInt): int list) = 
+	match lstInt with
+	| [] -> []
+	| a::b::rest -> (a, b)::inPairs (rest)
+	| a::rest -> []
+	
+	
 
 
 
@@ -50,8 +63,13 @@ let inPairs (([integers]): int list) =
    flatten [[1; 2; 3]; []; [4; 5]; [6]] = [1; 2; 3; 4; 5; 6]
    It should have type: int list list -> int list
 *)
-let flatten ((lists): int list list) =
-	[5]
+let rec flatten ((lst): int list list) =
+	match lst with
+	| []-> []
+	| a::rest -> if a = [] 
+				 then flatten (rest) 
+				 else a @ flatten (rest)
+
 
 
 (*
@@ -59,8 +77,12 @@ let flatten ((lists): int list list) =
    list of integers, and removes from that list any occurrence of n.
    It should have type: int * int list -> int list
 *)
-let remove ((n, listy): int * int list) =
-	[5]
+let rec remove ((n, lstInt): int * int list) =
+	match lstInt with 
+	| [] -> []
+	| a::rest when a = n -> remove (n, rest)
+	| a::rest -> a::remove (n, rest)
+
 
 
 (*
@@ -70,8 +92,11 @@ let remove ((n, listy): int * int list) =
    removeDups [4; 1; 2; 1; 4; 5; 20] = [4; 1; 2; 5; 20]
    It should have type: int list -> int list
 *)
-let removeDups ((listy): int list) =
-	[5]
+let rec removeDups ((lst): int list) =
+	match lst with 
+	| [] -> []
+	| a::rest -> a::remove (a, removeDups (rest))
+
 
 
 
@@ -82,8 +107,11 @@ let removeDups ((listy): int list) =
    collateSome [Some 1; None; Some 2; Some 1; None; Some 3] = [1; 2; 1; 3]
    It should have type: int option list -> int list
 *)
-let collateSome ((listOptions): int option list) =
-	[5]
+let rec collateSome ((lstOpt): int option list) =
+	match lstOpt with
+	| [] -> []
+	| Some a::rest -> a::collateSome(rest)
+	| None::rest -> collateSome (rest)
 
 
 
@@ -94,8 +122,12 @@ let collateSome ((listOptions): int option list) =
    unzip2 [(1, 2); (3, 4); (5, 6)] = ([1; 3; 5], [2; 4; 6])
    It should have type: (int * int) list -> int list * int list
 *)
-let unzip2 ((intPairList): (int * int) list) =
-	([5], [10])
+let rec unzip2 ((lst): (int * int) list) =
+	match lst with
+	| [] ->  ([],[])
+	| (a, b)::rest -> let first, second = unzip2 rest in 
+					  a::first, b::second
+
 
 
 
@@ -113,5 +145,12 @@ let unzip2 ((intPairList): (int * int) list) =
    write some good tests of this behavior.
    It should have type: int * int list -> int list option
 *)
-let makeChange ((n, listDecr): int * int list) = 
+let rec makeChange ((n, lstDecr): int * int list) = 
 	Some [5; 10]
+	(*match lstDecr with
+	| [] -> []
+	| a::rest -> if n - a >= 0 
+				 then a::makeChange (n-a, lstDecr)
+				 else if n - a = 0
+				 then Some (a::lstFin)
+				 else makeChange (n, rest)*)
