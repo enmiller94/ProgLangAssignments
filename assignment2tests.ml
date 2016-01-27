@@ -11,6 +11,8 @@ let t1f = try (getnth (0, ["hi"; "there"; "you"]); false) with
 			| Failure "getnth" -> true
             | _ -> false
 
+
+
 let t2a = lookup ("you", []) = None
 let t2b = lookup ("you", [("him", 2); ("you", 3)]) = Some 3
 let t2c = lookup ("you", [("him", 2); ("you", 3); ("you", 54)]) = Some 3
@@ -18,7 +20,12 @@ let t2d = lookup ("him", [("him", 2); ("you", 3); ("him", 34)]) = Some 2
 let t2e = lookup ("dfas", [("him", 2); ("you", 3)]) = None
 
 
+
 let t3a = inPairs [1; 2; 3; 4; 5] = [(1, 2); (3, 4)]
+let t3b = inPairs [10; 21; 32; 43; 54] = [(10, 21); (32, 43)]
+let t3c = inPairs [] = []
+let t3d = inPairs [1] = []
+let t3e = inPairs [1; 2; 3; 4; 5; 6] = [(1, 2); (3, 4); (5, 6)]
 
 
 let t4a = flatten [[1; 2; 3]; []; [4; 5]; [6]] = [1; 2; 3; 4; 5; 6]
