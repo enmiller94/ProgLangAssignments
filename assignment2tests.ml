@@ -41,6 +41,7 @@ let t5a = remove (3, [3; 4; 3; 1]) = [4; 1]
 let t5b = remove (3, [4; 3; 1]) = [4; 1]
 let t5c = remove (3, [3; 3; 3; 3]) = []
 let t5d = remove (34, [3; 4; 3; 1]) = [3; 4; 3; 1]
+let t5e = remove (32, []) = []
 
 
 
@@ -55,6 +56,7 @@ let t7a = collateSome [Some 1; None; Some 2; Some 1; None; Some 3] = [1; 2; 1; 3
 let t7b = collateSome [None; None; None] = []
 let t7c = collateSome [Some 1; Some 2; Some 1; Some 3] = [1; 2; 1; 3]
 let t7d = collateSome [Some 12; None; None; Some 1; None; None] = [12; 1]
+let t7e = collateSome [] = []
 
 
 
@@ -68,3 +70,6 @@ let t8d = unzip2 [(11, 22); (33, 44); (55, 66)] = ([11; 33; 55], [22; 44; 66])
 let t9a = makeChange (20, [8; 3; 2]) = Some [8; 8; 2; 2]
 let t9b = makeChange (20, [8; 3]) = Some [8; 3; 3; 3; 3]
 let t9c = makeChange (20, [13; 11]) = None
+let t9d = makeChange (24, [8; 3; 2]) = Some [8; 8; 8;]
+let t9e = makeChange (13, [101, 28, 24, 1]) = Some [1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1]
+let t9f = makeChange (10, [10; 3; 2]) = Some [10]
