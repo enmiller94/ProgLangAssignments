@@ -52,8 +52,29 @@ let t4g = valid_game [(Rock, Scissors); (Rock, Paper)] = false
 
 
 let t5a = play_game [(Rock, Rock); (Scissors, Rock)] = SndWin
+let t5b = play_game [(Rock, Rock); (Rock, Rock)] = Tie
+let t5c = play_game [(Rock, Rock); (Paper, Rock)] = FstWin
+let t5d = play_game [(Rock, Rock); (Scissors, Rock)] = SndWin
+let t5e = play_game [(Rock, Rock); (Scissors, Rock)] = SndWin
+let t5f = play_game [(Scissors, Scissors); (Rock, Rock); (Paper, Paper); (Rock, Scissors)] = FstWin
+let t5g = play_game [(Rock, Rock)] = Tie
+let t5h = play_game [(Rock, Scissors); (Rock, Rock)] = Tie
+let t5i = play_game [(Rock, Rock); (Paper, Paper); (Rock, Scissors); (Paper, Scissors)] = SndWin
+let t5j = play_game [(Rock, Scissors); (Rock, Paper)] = FstWin
+
+
 
 let t6a = to_f (F 2.3) = 2.3
+let t6b = to_f (F 32.0) = 32.0
+let t6b1 = to_f (F (-20.0)) = -20.0
+let t6c = to_f (F 212.0) = 212.0
+let t6d = to_f (C 0.0) = 32.0
+let t6e = to_f (C 100.0) = 212.0
+let t6f = to_f (C 54.0) = 129.2
+let t6g = to_f (C (-54.0)) = -65.2
+let t6h = to_f (C (-10.0)) = 14.0
+
+
 
 let t7a = temp_compare (F 2.3, F 4.5) = -1
 
