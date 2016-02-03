@@ -51,15 +51,16 @@ type play = shape list
    returns the result of that check.
    Type: check -> result
 *)
-
-
+let result ((check): check): result = 
+    Tie
 
 (*
    Write a function `is_tie` that takes as input a check and returns
    whether the check's result is a tie.
    Type: check -> bool
 *)
-
+let is_tie ((check): check): bool = 
+    true
 
 
 
@@ -70,7 +71,8 @@ type play = shape list
    other, stop at the shortest one.
    Type: play * play -> game
 *)
-
+let rec game_from_plays ((play_1, play_2): play * play): game =
+    [(Rock, Paper); (Paper, Rock)]
 
 
 (*
@@ -78,13 +80,17 @@ type play = shape list
    a valid game as described above.
    Type: game -> bool
 *)
-
+let rec valid_game ((game): game): bool =
+    true
 
 
 (*
    Write a function `play_game` that plays the game as described above.
    Type: game -> result
 *)
+let rec play_game ((game): game): result = 
+    FstWin
+
 
 
 (* --------------------------------------
@@ -106,6 +112,8 @@ type temp = C of float | F of float
    them to distinguish from the integer ones. For example "2.1 +. 5.2"
    Type: temp -> float
 *)
+let to_f ((c): temp): temp =
+    F 100.0
 
 
 (*
@@ -114,7 +122,8 @@ type temp = C of float | F of float
    equal and -1 if the second temperature is higher.
    Type: temp * temp -> int
 *)
-
+let temp_compare ((t, t'): temp * temp): int = 
+    1
 
 
 (*
@@ -125,7 +134,8 @@ type temp = C of float | F of float
    to strings.
    Type: temp -> string
 *)
-
+let string_of_temp ((t): temp): string =
+    "temp"
 
 
 
@@ -135,8 +145,15 @@ type temp = C of float | F of float
    if the list is empty.
    Type: temp list -> temp
 *)
+let rec max_temp ((list_temps): temp list): temp = 
+    F 100.0
+
 (*
    Write a function `max_temp2` that behaves like `max_temp` but where all the
    recursive calls are tail calls. You will likely need to define an auxiliary
    function and use state recursion.
 *)
+let rec max_temp2 ((list_temps): temp list): temp = 
+    F 100.0 
+
+
