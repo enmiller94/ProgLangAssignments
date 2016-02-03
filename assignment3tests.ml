@@ -42,6 +42,14 @@ let t3h = game_from_plays ([], [Scissors; Rock; Rock]) =
 
 
 let t4a = valid_game [(Rock, Scissors)] = true
+let t4b = valid_game [(Scissors, Scissors); (Rock, Rock); (Paper, Paper); (Rock, Scissors)] = true
+let t4c = valid_game [(Rock, Rock)] = false
+let t4d = valid_game [(Rock, Scissors); (Rock, Rock)] = false
+let t4e = valid_game [(Rock, Rock); (Paper, Paper); (Rock, Scissors); (Scissors, Scissors)] = false
+let t4f = valid_game [] = true
+let t4g = valid_game [(Rock, Scissors); (Rock, Paper)] = false
+
+
 
 let t5a = play_game [(Rock, Rock); (Scissors, Rock)] = SndWin
 
