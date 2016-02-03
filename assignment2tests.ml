@@ -59,6 +59,10 @@ let t7d = collateSome [Some 12; None; None; Some 1; None; None] = [12; 1]
 let t7e = collateSome [] = []
 
 
+<<<<<<< HEAD
+=======
+let t7a = collateSome [Some 1; None; Some 2; Some 1; None; Some 3] = [1; 2; 1; 3]
+>>>>>>> instr/master
 
 let t8a = unzip2 [(1, 2); (3, 4); (5, 6)] = ([1; 3; 5], [2; 4; 6])
 let t8b = unzip2 [] = ([], [])
