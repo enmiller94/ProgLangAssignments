@@ -46,13 +46,20 @@ type result = Tie | FstWin | SndWin
 type game = check list
 type play = shape list
 
+
+
 (*
    Write a function `result` that takes as input a check and
    returns the result of that check.
    Type: check -> result
 *)
 let result ((check): check): result = 
-    Tie
+    match check with
+   | (Paper, Rock) | (Rock, Scissors) | (Scissors, Paper) -> FstWin
+   | (Rock, Paper) | (Scissors, Rock) | (Paper, Scissors) -> SndWin
+   | (Rock, Rock) | (Paper, Paper) | (Scissors, Scissors) -> Tie
+
+
 
 (*
    Write a function `is_tie` that takes as input a check and returns
