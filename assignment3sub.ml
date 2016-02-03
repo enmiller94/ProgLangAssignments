@@ -67,7 +67,7 @@ let result ((check): check): result =
    Type: check -> bool
 *)
 let is_tie ((check): check): bool = 
-    true
+    result check = Tie
 
 
 
