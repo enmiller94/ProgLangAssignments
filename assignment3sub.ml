@@ -80,13 +80,13 @@ let is_tie ((check): check): bool =
 *)
 let rec game_from_plays ((play_1, play_2): play * play): game =
     [(Rock, Rock)]
-       (*let x, y in (if length play_1 > length play_2
-               then x = play_1, y = play_2
-               else x = play_2, y = play_1)
-               match x with 
-               | [] -> []
-               | (element :: rest, element' :: rest') -> let game_lst = game_from_plays rest in 
-                                                         (element, element') :: game_lst
+    (*let x, y in (if length play_1 > length play_2
+        then x = play_1, y = play_2
+        else x = play_2, y = play_1)
+        match x with 
+        | [] -> []
+        | (element :: rest, element' :: rest') -> let game_lst = game_from_plays rest in 
+                                                  (element, element') :: game_lst
 *)
 
 (*
@@ -95,23 +95,23 @@ let rec game_from_plays ((play_1, play_2): play * play): game =
    Type: game -> bool
 *)
 let rec valid_game ((game): game): bool =
-    true 
-    (*match game with 
+    (*true *)
+    match game with 
    | [] -> true
    | check :: check' :: rest -> let answer = (is_tie check = true) in valid_game (check' :: rest) = answer
    | check :: rest -> let answer = (is_tie check = false) in valid_game rest = answer
-*)
+
 
 (*
    Write a function `play_game` that plays the game as described above.
    Type: game -> result
 *)
 let rec play_game ((game): game): result = 
-    FstWin
-    (*match game with 
-   | check :: check' :: rest -> play_game (check' :: rest) 
-   | check :: rest -> result check 
-*)
+    (*FstWin*)
+    match game with 
+    | [] -> Tie
+    | check :: check' :: rest -> play_game (check' :: rest) 
+    | check :: rest -> result check 
 
 
 (* --------------------------------------
@@ -146,23 +146,29 @@ let to_f ((c): temp): float =
 *)
 let temp_compare ((t, t'): temp * temp): int = 
     1
-    (*match (t, t') with
-   | (C, C') -> if C = C' 
+(*    match (t, t') with
+   | (C c, C c') -> if c = c' 
                 then 0 
-                else if C > C'
+                else if c > c'
                 then 1
                 else -1
-   | (F, F') -> if F = F'
+   | (F f, F f') -> if f = f'
                 then 0
-                else if F > F'
+                else if f > f'
                 then 1
                 else -1
-   | (C, F) | (F, C) -> let F' = to_f C in if F = F'
+   | (C c, F f) -> let f' = F (to_f c) in if f = f'
                                            then 0
-                                           else if F > F'
+                                           else if f > f'
+                                           then -1
+                                           else 1
+
+   | (F f, C c) -> let f' = F (to_f c) in if f = f'
+                                           then 0
+                                           else if f > f'
                                            then 1
-                                           else -1
-*)
+                                           else -1*)
+
 
 (*
    Write a function `string_of_temp` that takes as input a temperature and
