@@ -211,8 +211,7 @@ let rec max_temp ((list_temps): temp list): temp =
    function and use state recursion.
 *)
 let rec max_temp2 ((list_temps): temp list): temp = 
-    F 100.0
-    (*if list_temps = []
+    if list_temps = []
     then raise (Failure "max_temp2")
     else let rec aux ((lst): temp list): temp = 
         match lst with
@@ -222,6 +221,6 @@ let rec max_temp2 ((list_temps): temp list): temp =
                              else if temp_compare (element, aux rest) = -1
                              then aux rest
                              else element
-    in aux list_temps*)
+    in aux list_temps
 
 

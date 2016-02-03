@@ -115,6 +115,6 @@ let t10d = max_temp2 [F 2.1] = F 2.1
 let t10e = max_temp2 [F (-20.0); F 0.0; F (-100.0); F 20.0; F 35.0; F 19.0] = F 35.0
 let t10f = max_temp2 [C 0.0; C 2.1; C 32.0; C (-100.0)] = C 32.0
 let t10g = max_temp2 [F 2.1; C 2.1] = C 2.1
-let t10h = try (max_temp2 []; true)  with
+let t10h = try (max_temp2 []; false)  with
             | Failure "max_temp2" -> true
             | _ -> false
