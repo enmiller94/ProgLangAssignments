@@ -94,21 +94,24 @@ let rec game_from_plays ((play_1, play_2): play * play): game =
    a valid game as described above.
    Type: game -> bool
 *)
-let rec valid_game ((game): game): bool =
+let rec valid_game ((g): game): bool =
     (*true *)
-    match game with 
+    match g with 
    | [] -> true
-   | check :: check' :: rest -> let answer = (is_tie check = true) in valid_game (check' :: rest) = answer
-   | check :: rest -> let answer = (is_tie check = false) in valid_game rest = answer
+   | check :: check' :: rest -> let answer = (is_tie check = true) in 
+                                valid_game (check' :: rest) = answer
+   | check :: rest -> let answer = (is_tie check = false) in 
+                      valid_game rest = answer
+ 
 
 
 (*
    Write a function `play_game` that plays the game as described above.
    Type: game -> result
 *)
-let rec play_game ((game): game): result = 
+let rec play_game ((g): game): result = 
     (*FstWin*)
-    match game with 
+    match g with 
     | [] -> Tie
     | check :: check' :: rest -> play_game (check' :: rest) 
     | check :: rest -> result check 
@@ -134,8 +137,9 @@ type temp = C of float | F of float
    Type: temp -> float
 *)
 let to_f ((c): temp): float =
-    10.0
-    (*1.8 *. c +. 32.0*)
+    match c with
+    | F f -> f
+    | C c -> 1.8 *. c +. 32.0
 
 
 (*
