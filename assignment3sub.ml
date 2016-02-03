@@ -80,14 +80,17 @@ let is_tie ((check): check): bool =
 *)
 let rec game_from_plays ((play_1, play_2): play * play): game =
     [(Rock, Rock)]
-    (*let x, y in (if length play_1 > length play_2
-        then x = play_1, y = play_2
-        else x = play_2, y = play_1)
-        match x with 
-        | [] -> []
-        | (element :: rest, element' :: rest') -> let game_lst = game_from_plays rest in 
-                                                  (element, element') :: game_lst
-*)
+    (*let x, y = (if List.length play_1 > List.length play_2
+                then (play_2, play_1)
+                else (play_1, play_2)) in
+        let rec aux ((p, p'): play * play): game =
+            match (p, p') with 
+            | ([], _) -> ([], [])
+            | (element :: rest, element' :: rest') -> 
+              (element, element') :: aux (rest, rest') in
+        aux (x, y)*)
+
+
 
 (*
    Write a function `valid_game` that takes as input a game and determines if it is
@@ -95,13 +98,16 @@ let rec game_from_plays ((play_1, play_2): play * play): game =
    Type: game -> bool
 *)
 let rec valid_game ((g): game): bool =
-    (*true *)
-    match g with 
-   | [] -> true
-   | check :: check' :: rest -> let answer = (is_tie check = true) in 
-                                valid_game (check' :: rest) = answer
-   | check :: rest -> let answer = (is_tie check = false) in 
-                      valid_game rest = answer
+    true 
+    (*match g with 
+   | [] -> true 
+   | c :: c' :: rest -> let answer = (is_tie c = true) in 
+                        valid_game (c' :: rest) = answer 
+   | c :: rest -> if rest = [] 
+                      then let answer = (is_tie c = false) in 
+                           valid_game rest = answer 
+                      else let answer = (is_tie c = true) in 
+                           valid_game rest = answer *)
  
 
 
@@ -149,29 +155,23 @@ let to_f ((c): temp): float =
    Type: temp * temp -> int
 *)
 let temp_compare ((t, t'): temp * temp): int = 
-    1
-(*    match (t, t') with
-   | (C c, C c') -> if c = c' 
+    (*1*)
+    match (t, t') with
+    | (C x, C x') | (F x, F x') -> if x = x' 
                 then 0 
-                else if c > c'
+                else if x > x'
                 then 1
                 else -1
-   | (F f, F f') -> if f = f'
-                then 0
-                else if f > f'
-                then 1
-                else -1
-   | (C c, F f) -> let f' = F (to_f c) in if f = f'
+    | (C c, F f) -> let f' = to_f (C c) in if f = f'
                                            then 0
                                            else if f > f'
                                            then -1
                                            else 1
-
-   | (F f, C c) -> let f' = F (to_f c) in if f = f'
+    | (F f, C c) -> let f' = to_f (C c) in if f = f'
                                            then 0
                                            else if f > f'
                                            then 1
-                                           else -1*)
+                                           else -1
 
 
 (*
@@ -194,7 +194,17 @@ let string_of_temp ((t): temp): string =
    Type: temp list -> temp
 *)
 let rec max_temp ((list_temps): temp list): temp = 
-    F 100.0
+    F 100.0 
+    (*match list_temps with
+    | [] -> raise (Failure "max_temp")
+    | element :: rest -> if rest = []
+                         then element
+                         else (if temp_compare (element, max_temp rest) = 1
+                              then element
+                              else if temp_compare (element, max_temp rest) = -1
+                              then max_temp rest
+                              else element)
+*)
 
 (*
    Write a function `max_temp2` that behaves like `max_temp` but where all the
@@ -202,6 +212,17 @@ let rec max_temp ((list_temps): temp list): temp =
    function and use state recursion.
 *)
 let rec max_temp2 ((list_temps): temp list): temp = 
-    F 100.0 
+    F 100.0
+    (*if list_temps = []
+    then raise (Failure "max_temp2")
+    else let rec aux ((lst): temp list): temp = 
+        match lst with
+        | [] -> F (-100000000.0)
+        | element :: rest -> if temp_compare (element, aux rest) = 1
+                             then element
+                             else if temp_compare (element, aux rest) = -1
+                             then aux rest
+                             else element
+    in aux list_temps*)
 
 
