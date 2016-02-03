@@ -79,8 +79,15 @@ let is_tie ((check): check): bool =
    Type: play * play -> game
 *)
 let rec game_from_plays ((play_1, play_2): play * play): game =
-    [(Rock, Paper); (Paper, Rock)]
-
+    [(Rock, Rock)]
+       (*let x, y in (if length play_1 > length play_2
+               then x = play_1, y = play_2
+               else x = play_2, y = play_1)
+               match x with 
+               | [] -> []
+               | (element :: rest, element' :: rest') -> let game_lst = game_from_plays rest in 
+                                                         (element, element') :: game_lst
+*)
 
 (*
    Write a function `valid_game` that takes as input a game and determines if it is
@@ -88,8 +95,12 @@ let rec game_from_plays ((play_1, play_2): play * play): game =
    Type: game -> bool
 *)
 let rec valid_game ((game): game): bool =
-    true
-
+    true 
+    (*match game with 
+   | [] -> true
+   | check :: check' :: rest -> let answer = (is_tie check = true) in valid_game (check' :: rest) = answer
+   | check :: rest -> let answer = (is_tie check = false) in valid_game rest = answer
+*)
 
 (*
    Write a function `play_game` that plays the game as described above.
@@ -97,7 +108,10 @@ let rec valid_game ((game): game): bool =
 *)
 let rec play_game ((game): game): result = 
     FstWin
-
+    (*match game with 
+   | check :: check' :: rest -> play_game (check' :: rest) 
+   | check :: rest -> result check 
+*)
 
 
 (* --------------------------------------
@@ -120,7 +134,8 @@ type temp = C of float | F of float
    Type: temp -> float
 *)
 let to_f ((c): temp): float =
-    100.0
+    10.0
+    (*1.8 *. c +. 32.0*)
 
 
 (*
@@ -131,7 +146,23 @@ let to_f ((c): temp): float =
 *)
 let temp_compare ((t, t'): temp * temp): int = 
     1
-
+    (*match (t, t') with
+   | (C, C') -> if C = C' 
+                then 0 
+                else if C > C'
+                then 1
+                else -1
+   | (F, F') -> if F = F'
+                then 0
+                else if F > F'
+                then 1
+                else -1
+   | (C, F) | (F, C) -> let F' = to_f C in if F = F'
+                                           then 0
+                                           else if F > F'
+                                           then 1
+                                           else -1
+*)
 
 (*
    Write a function `string_of_temp` that takes as input a temperature and
@@ -142,9 +173,9 @@ let temp_compare ((t, t'): temp * temp): int =
    Type: temp -> string
 *)
 let string_of_temp ((t): temp): string =
-    "temp"
-
-
+    match t with
+   | C c -> string_of_float c ^ "C"
+   | F f -> string_of_float f ^ "F"
 
 (*
    Write a function `max_temp` that takes as input a list of temperatures and
