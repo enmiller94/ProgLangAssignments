@@ -194,8 +194,7 @@ let string_of_temp ((t): temp): string =
    Type: temp list -> temp
 *)
 let rec max_temp ((list_temps): temp list): temp = 
-    F 100.0 
-    (*match list_temps with
+    match list_temps with
     | [] -> raise (Failure "max_temp")
     | element :: rest -> if rest = []
                          then element
@@ -204,7 +203,7 @@ let rec max_temp ((list_temps): temp list): temp =
                               else if temp_compare (element, max_temp rest) = -1
                               then max_temp rest
                               else element)
-*)
+
 
 (*
    Write a function `max_temp2` that behaves like `max_temp` but where all the
