@@ -96,5 +96,16 @@ let t8d = string_of_temp (F (-2.3)) = "-2.3F"
 
 
 let t9a = max_temp [F 2.1; C 2.1] = C 2.1
+let t9b = max_temp [F 32.0; C 0.0] = C 0.0
+let t9c = max_temp [C 2.1] = C 2.1
+let t9d = max_temp [F 2.1] = F 2.1
+let t9e = max_temp [F (-20.0); F 0.0; F (-100.0); F 20.0; F 35.0; F 19.0] = F 35.0
+let t9f = max_temp [C 0.0; C 2.1; C 32.0; C (-100.0)] = C 32.0
+let t9g = max_temp [F 2.1; C 2.1] = C 2.1
+let t9h  = try (max_temp []; false)  with
+            | Failure "max_temp" -> true
+            | _ -> false
+
+
 
 let t10a = max_temp2 [F 2.1; C 2.1] = C 2.1
