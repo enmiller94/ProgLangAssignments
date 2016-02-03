@@ -1,4 +1,14 @@
 let t1a = result (Rock, Paper) = SndWin
+let t1b = result (Rock, Scissors) = FstWin
+let t1c = result (Paper, Scissors) = SndWin
+let t1d = result (Paper, Rock) = FstWin
+let t1e = result (Scissors, Paper) = FstWin
+let t1f = result (Scissors, Rock) = SndWin
+let t1g = result (Rock, Rock) = Tie
+let t1h = result (Paper, Paper) = Tie
+let t1i = result (Scissors, Scissors) = Tie
+
+
 
 let t2a = is_tie (Rock, Paper) = false
 
