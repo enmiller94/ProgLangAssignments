@@ -112,8 +112,8 @@ type temp = C of float | F of float
    them to distinguish from the integer ones. For example "2.1 +. 5.2"
    Type: temp -> float
 *)
-let to_f ((c): temp): temp =
-    F 100.0
+let to_f ((c): temp): float =
+    100.0
 
 
 (*
