@@ -72,7 +72,7 @@ let t6d = to_f (C 0.0) = 32.0
 let t6e = to_f (C 100.0) = 212.0
 let t6f = to_f (C 54.0) = 129.2
 let t6g = to_f (C (-54.0)) = -65.2
-let t6h = to_f (C (-10.0)) = 14.0
+let t6h = to_f (C (-10.0)) = 14.00
 
 
 
