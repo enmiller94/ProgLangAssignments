@@ -79,16 +79,9 @@ let is_tie ((check): check): bool =
    Type: play * play -> game
 *)
 let rec game_from_plays ((play_1, play_2): play * play): game =
-    [(Rock, Rock)]
-    (*let x, y = (if List.length play_1 > List.length play_2
-                then (play_2, play_1)
-                else (play_1, play_2)) in
-        let rec aux ((p, p'): play * play): game =
-            match (p, p') with 
-            | ([], _) -> ([], [])
-            | (element :: rest, element' :: rest') -> 
-              (element, element') :: aux (rest, rest') in
-        aux (x, y)*)
+    match (play_1, play_2) with
+    | ([], []) | ([], _) | (_, []) -> ([])
+    | (element :: rest, element' :: rest') -> (element, element') :: game_from_plays (rest, rest')
 
 
 
@@ -98,16 +91,16 @@ let rec game_from_plays ((play_1, play_2): play * play): game =
    Type: game -> bool
 *)
 let rec valid_game ((g): game): bool =
-    true 
-    (*match g with 
-   | [] -> true 
-   | c :: c' :: rest -> let answer = (is_tie c = true) in 
-                        valid_game (c' :: rest) = answer 
-   | c :: rest -> if rest = [] 
-                      then let answer = (is_tie c = false) in 
-                           valid_game rest = answer 
-                      else let answer = (is_tie c = true) in 
-                           valid_game rest = answer *)
+    match g with
+    | [] -> true 
+    | check :: rest -> let answer = is_tie check in 
+                            if answer = false
+                            then (if rest = []
+                                  then true = valid_game rest
+                                  else false = valid_game rest)
+                            else (if rest != []
+                                        then true = valid_game rest
+                                        else false = valid_game rest)
  
 
 
