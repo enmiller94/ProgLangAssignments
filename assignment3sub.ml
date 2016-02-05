@@ -167,6 +167,7 @@ let temp_compare ((t, t'): temp * temp): int =
                                            else -1
 
 
+
 (*
    Write a function `string_of_temp` that takes as input a temperature and
    returns a string representing that temperature. For instance 23.2 Fahrenheit
@@ -175,10 +176,12 @@ let temp_compare ((t, t'): temp * temp): int =
    to strings.
    Type: temp -> string
 *)
-let string_of_temp ((t): temp): string =
+let string_of_temp (t: temp): string =
     match t with
    | C c -> string_of_float c ^ "C"
    | F f -> string_of_float f ^ "F"
+
+
 
 (*
    Write a function `max_temp` that takes as input a list of temperatures and
