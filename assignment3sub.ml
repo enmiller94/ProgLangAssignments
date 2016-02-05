@@ -149,7 +149,6 @@ let to_f (c: temp): float =
    Type: temp * temp -> int
 *)
 let temp_compare ((t, t'): temp * temp): int = 
-    (*1*)
     match (t, t') with
     | (C x, C x') | (F x, F x') -> if x = x' 
                 then 0 
