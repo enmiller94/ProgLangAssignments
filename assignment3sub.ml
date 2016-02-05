@@ -92,18 +92,15 @@ let rec game_from_plays ((play_1, play_2): play * play): game =
 *)
 let rec valid_game ((g): game): bool =
     match g with
-    | [] -> true 
-    | check :: rest -> let answer = is_tie check in 
-                            if answer = false
-                            then (if rest = []
-                                  then true = valid_game rest
-                                  else false = valid_game rest)
-                            else (if rest != []
-                                        then true = valid_game rest
-                                        else false = valid_game rest)
- 
+    | [] -> false 
+    | element :: [] -> is_tie element = false
+    | element :: rest -> let answer = (is_tie element = true) in
+                            let cont = valid_game rest in
+                                if answer = false || cont = false
+                                then false
+                                else answer = cont
 
-
+    
 (*
    Write a function `play_game` that plays the game as described above.
    Type: game -> result

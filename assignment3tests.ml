@@ -46,7 +46,7 @@ let t4b = valid_game [(Scissors, Scissors); (Rock, Rock); (Paper, Paper); (Rock,
 let t4c = valid_game [(Rock, Rock)] = false
 let t4d = valid_game [(Rock, Scissors); (Rock, Rock)] = false
 let t4e = valid_game [(Rock, Rock); (Paper, Paper); (Rock, Scissors); (Scissors, Scissors)] = false
-let t4f = valid_game [] = true
+let t4f = valid_game [] = false
 let t4g = valid_game [(Rock, Scissors); (Rock, Paper)] = false
 
 
