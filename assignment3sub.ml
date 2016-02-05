@@ -135,10 +135,11 @@ type temp = C of float | F of float
    them to distinguish from the integer ones. For example "2.1 +. 5.2"
    Type: temp -> float
 *)
-let to_f ((c): temp): float =
+let to_f (c: temp): float =
     match c with
     | F f -> f
     | C c -> 1.8 *. c +. 32.0
+
 
 
 (*
