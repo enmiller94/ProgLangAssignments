@@ -203,22 +203,22 @@ let rec max_temp (list_temps: temp list): temp =
                                         else element
 
 
+
 (*
    Write a function `max_temp2` that behaves like `max_temp` but where all the
    recursive calls are tail calls. You will likely need to define an auxiliary
    function and use state recursion.
 *)
-let rec max_temp2 ((list_temps): temp list): temp = 
+let rec max_temp2 (list_temps: temp list): temp = 
     if list_temps = []
     then raise (Failure "max_temp2")
-    else let rec aux ((lst): temp list): temp = 
+    else let rec aux (lst: temp list): temp = 
         match lst with
         | [] -> F (-100000000.0)
-        | element :: rest -> if temp_compare (element, aux rest) = 1
-                             then element
-                             else if temp_compare (element, aux rest) = -1
-                             then aux rest
-                             else element
+        | element :: rest -> let tempComp = temp_compare (element, aux rest) in
+                                 if tempComp = 1
+                                 then element
+                                 else if tempComp = -1
+                                 then aux rest
+                                 else element
     in aux list_temps
-
-
