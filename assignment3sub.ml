@@ -81,7 +81,8 @@ let is_tie (ch: check): bool =
 let rec game_from_plays ((play_1, play_2): play * play): game =
     match (play_1, play_2) with
     | ([], []) | ([], _) | (_, []) -> ([])
-    | (element :: rest, element' :: rest') -> (element, element') :: game_from_plays (rest, rest')
+    | (element :: rest, element' :: rest') -> 
+      (element, element') :: game_from_plays (rest, rest')
 
 
 
