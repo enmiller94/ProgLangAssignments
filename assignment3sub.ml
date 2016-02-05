@@ -53,8 +53,8 @@ type play = shape list
    returns the result of that check.
    Type: check -> result
 *)
-let result ((check): check): result = 
-    match check with
+let result (ch: check): result = 
+    match ch with
    | (Paper, Rock) | (Rock, Scissors) | (Scissors, Paper) -> FstWin
    | (Rock, Paper) | (Scissors, Rock) | (Paper, Scissors) -> SndWin
    | (Rock, Rock) | (Paper, Paper) | (Scissors, Scissors) -> Tie
