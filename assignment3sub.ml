@@ -91,15 +91,16 @@ let rec game_from_plays ((play_1, play_2): play * play): game =
    a valid game as described above.
    Type: game -> bool
 *)
-let rec valid_game ((g): game): bool =
+let rec valid_game (g: game): bool =
     match g with
     | [] -> false 
     | element :: [] -> is_tie element = false
-    | element :: rest -> let answer = (is_tie element = true) in
+    | element :: rest -> let answer = is_tie element = true in
                             let cont = valid_game rest in
                                 if answer = false || cont = false
                                 then false
                                 else answer = cont
+
 
     
 (*
