@@ -189,16 +189,18 @@ let string_of_temp (t: temp): string =
    if the list is empty.
    Type: temp list -> temp
 *)
-let rec max_temp ((list_temps): temp list): temp = 
+let rec max_temp (list_temps: temp list): temp = 
     match list_temps with
     | [] -> raise (Failure "max_temp")
     | element :: rest -> if rest = []
                          then element
-                         else (if temp_compare (element, max_temp rest) = 1
-                              then element
-                              else if temp_compare (element, max_temp rest) = -1
-                              then max_temp rest
-                              else element)
+                         else let maxTemp = max_temp rest in
+                                  let tempComp = temp_compare (element, maxTemp) in
+                                        if tempComp = 1
+                                        then element
+                                        else if tempComp = -1
+                                        then max_temp rest
+                                        else element
 
 
 (*
