@@ -107,12 +107,13 @@ let rec valid_game (g: game): bool =
    Write a function `play_game` that plays the game as described above.
    Type: game -> result
 *)
-let rec play_game ((g): game): result = 
-    (*FstWin*)
+let rec play_game (g: game): result = 
     match g with 
     | [] -> Tie
-    | check :: check' :: rest -> play_game (check' :: rest) 
-    | check :: rest -> result check 
+    | check :: rest -> if is_tie check = false
+                       then result check
+                       else play_game rest
+
 
 
 (* --------------------------------------

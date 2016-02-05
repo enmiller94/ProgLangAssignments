@@ -58,9 +58,10 @@ let t5d = play_game [(Rock, Rock); (Scissors, Rock)] = SndWin
 let t5e = play_game [(Rock, Rock); (Scissors, Rock)] = SndWin
 let t5f = play_game [(Scissors, Scissors); (Rock, Rock); (Paper, Paper); (Rock, Scissors)] = FstWin
 let t5g = play_game [(Rock, Rock)] = Tie
-let t5h = play_game [(Rock, Scissors); (Rock, Rock)] = Tie
-let t5i = play_game [(Rock, Rock); (Paper, Paper); (Rock, Scissors); (Paper, Scissors)] = SndWin
-let t5j = play_game [(Rock, Scissors); (Rock, Paper)] = SndWin
+let t5h = play_game [(Rock, Scissors); (Rock, Rock)] = FstWin
+let t5i = play_game [(Rock, Rock); (Paper, Paper); (Rock, Scissors); (Paper, Scissors)] = FstWin
+let t5j = play_game [(Rock, Scissors); (Rock, Paper)] = FstWin
+let t5k = play_game [] = Tie
 
 
 
