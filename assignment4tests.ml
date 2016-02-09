@@ -6,6 +6,11 @@ let t1a = let f = fun () -> raise (Failure "")
                 | _ -> false
 
 let t1b = (thunk (fun () -> 5)) () = 5
+let t1c = (thunk (fun () -> 10)) () = 10
+let t1d = (thunk (fun () -> 15 + 5)) () = 20
+let t1e = (thunk (fun () -> 15 - 5)) () = 10
+let t1f = (thunk (fun () -> 15 * 5)) () = 45
+let t1g = (thunk (fun () -> 15.0 / 5.0)) () = 3.0
 
 let t2a = (thunk_of_value 4) () = 4
 
