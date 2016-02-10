@@ -244,6 +244,7 @@ let rec delete (sTable, s) =
                                      else (sElement, vElement) :: delete (rest, s) 
 
 
+
 (*
    Write a function `keys` that takes as input a symbol table and returns a list
    of the keys in the table.
