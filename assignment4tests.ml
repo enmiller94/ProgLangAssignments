@@ -119,5 +119,9 @@ let t12f = delete ([("foo", 3); ("goo", 5); ("hoo", 7)], "foo") = [("goo", 5); (
 
 
 let t13a = keys [("bar", 3); ("foo", 2)] = ["bar"; "foo"]
+let t13b = keys empty = []
+let t13c = keys [("bar", 3)] = ["bar"]
+let t13d = keys [("bar", 3); ("foo", 2); ("goo", 5); ("hoo", 7)] = ["bar"; "foo"; "goo"; "hoo"]
+
 
 let t14a = is_proper [("bar", 3); ("foo", 2)] = true
