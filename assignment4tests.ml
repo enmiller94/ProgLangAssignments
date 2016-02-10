@@ -6,7 +6,6 @@ let t1a = let f = fun () -> raise (Failure "")
                 | _ -> false
 
 
-
 let t1b = (thunk (fun () -> 5)) () = 5
 let t1c = (thunk (fun () -> 10)) () = 10
 let t1d = (thunk (fun () -> 15 + 5)) () = 20
@@ -15,11 +14,9 @@ let t1f = (thunk (fun () -> 15 * 5)) () = 75
 let t1g = (thunk (fun () -> 15.0 /. 5.0)) () = 3.0
 
 
-
 let t2a = (thunk_of_value 4) () = 4
 let t2b = (thunk_of_value 10) () = 10
 let t2c = (thunk_of_value 150.0 ) () = 150.0
-
 
 
 let t3a = try (try (thunk_of_eval ((fun x -> raise (Failure "")), 4))
@@ -27,6 +24,11 @@ let t3a = try (try (thunk_of_eval ((fun x -> raise (Failure "")), 4))
           with Failure "" -> true
              | _ -> false
 let t3b = thunk_of_eval ((fun x -> x + 1), 5) () = 6
+let t3c = thunk_of_eval ((fun x -> x + x), 5) () = 10
+let t3d = thunk_of_eval ((fun x -> x *. 2.0), 5.0) () = 10.0
+let t3e = thunk_of_eval ((fun x -> x /. 10.0), 5.0) () = 0.5
+let t3f = thunk_of_eval ((fun x -> x - 2), 5) () = 3
+
 
 let t4a = try_thunk (fun () -> raise (Failure "hi")) = None
 
