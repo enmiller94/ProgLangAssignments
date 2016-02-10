@@ -104,6 +104,11 @@ let t10f = lookup ([("foo", 3); ("goo", 5); ("hoo", 7)], "hoo") = 7
 let t11a = lookup_opt ([("bar", 3); ("foo", 2)], "bar") = Some 3
 (* Again the search should be stopping after "foo" *)
 let t11b = lookup_opt ([("foo", 2); ("bar", 3)], "bar") = None
+let t11c = lookup_opt ([("foo", 3); ("goo", 5); ("zoo", 7)], "hoo") = None
+let t11d = lookup_opt ([("foo", 3); ("goo", 5); ("hoo", 7)], "hoo") = Some 7
+let t11e = lookup_opt ([("foo", 3); ("goo", 5); ("hoo", 7)], "goo") = Some 5
+let t11f = lookup_opt (empty, "bar") = None
+
 
 let t12a = delete ([("bar", 3); ("baz", 1); ("foo", 2)], "baz") = [("bar", 3); ("foo", 2)]
 
