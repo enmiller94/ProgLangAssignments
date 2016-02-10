@@ -228,6 +228,7 @@ let rec lookup_opt (sTable, s) =
                                      else lookup_opt (rest, s)
 
 
+
 (*
    Write a function `delete` that takes as input a pair of a symbol table and a
    symbol. It returns the symbol table that results from the removal of the pair
