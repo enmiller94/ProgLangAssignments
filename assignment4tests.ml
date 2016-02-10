@@ -79,6 +79,11 @@ let t8e = insert ([("foo", 3); ("goo", 5); ("hoo", 7)], "goo", 5) = [("foo", 3);
 
 
 let t9a = has ([("foo", 2)], "foo") = true
+let t9b = has (empty, "foo") = false
+let t9c = has ([("foo", 2); ("foo", 2); ("foo", 2); ("foo", 2)], "foo") = true
+let t9d = has ([("aoo", 2); ("boo", 2); ("coo", 2); ("doo", 2); ("foo", 2)], "foo") = true
+let t9e = has ([("boo", 2)], "foo") = false
+
 
 let t10a = lookup ([("bar", 3); ("foo", 2)], "bar") = 3
 let t10b = try (lookup ([("bar", 3); ("foo", 2)], "baz"); false)
