@@ -208,6 +208,7 @@ let rec lookup (sTable, s) =
                                      else lookup (rest, s)
 
 
+
 (*
    Write a function `lookup_opt` that takes as input a pair of a symbol table and a
    symbol. If it finds in the table a pair with that symbol as a key then it
