@@ -60,7 +60,7 @@ let t6d = thunk_map ((fun () -> 4.0), (fun x -> 2.0 /. x)) () = 0.5
 let t6e = thunk_map ((fun () -> 4), (fun x -> 2 + x)) () = 6
 
 
-(*
+(*)
 let t7a = let f = fun () -> raise (Failure "")
           in try (try thunk_of_list [f; f]
                   with Failure "" -> (fun () -> [])) () = []
@@ -69,7 +69,6 @@ let t7a = let f = fun () -> raise (Failure "")
 let t7b = let f = fun () -> 5
           in thunk_of_list [f; f] () = [5; 5]
 *)
-
 
 
 let t8a = insert (empty, "foo", 3) = [("foo", 3)]
@@ -118,10 +117,6 @@ let t12d = delete ([("foo", 3); ("goo", 5); ("hoo", 7)], "goo") = [("foo", 3); (
 let t12e = delete ([("foo", 3); ("goo", 5); ("zoo", 7)], "hoo") = [("foo", 3); ("goo", 5); ("zoo", 7)]
 let t12f = delete ([("foo", 3); ("goo", 5); ("hoo", 7)], "foo") = [("goo", 5); ("hoo", 7)]
 
-<<<<<<< HEAD
-=======
-let t12a = delete ([("bar", 3); ("baz", 1); ("foo", 2)], "bar") = [("baz", 1); ("foo", 2)]
->>>>>>> instr/master
 
 let t13a = keys [("bar", 3); ("foo", 2)] = ["bar"; "foo"]
 let t13b = keys empty = []

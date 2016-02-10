@@ -67,7 +67,8 @@ let thunk_of_eval (f, a) = fun () -> f a
    It should have type: 'a thunk -> 'a option
 *)
 let try_thunk f = try Some (f ()) with 
-                  | Not_found | Failure _ | Invalid_argument _ -> None
+                  | exn -> None
+                  (*| Not_found | Failure _ | Invalid_argument _ -> None*)
 
 
 
@@ -102,12 +103,11 @@ let thunk_map (th, f) = fun () -> f (th ())
    called.
    It should have type: 'a thunk list -> 'a list thunk
 *)
-(*)
+
 let rec thunk_of_list lst =
    match lst with
    | [] -> []
-   | element :: rest -> element :: thunk_of_list rest
-*)
+   | element :: rest -> element () :: thunk_of_list rest
 
 
 
@@ -279,4 +279,3 @@ let rec is_proper sTable =
             else true
 
 
-            
