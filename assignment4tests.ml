@@ -9,10 +9,14 @@ let t1b = (thunk (fun () -> 5)) () = 5
 let t1c = (thunk (fun () -> 10)) () = 10
 let t1d = (thunk (fun () -> 15 + 5)) () = 20
 let t1e = (thunk (fun () -> 15 - 5)) () = 10
-let t1f = (thunk (fun () -> 15 * 5)) () = 45
-let t1g = (thunk (fun () -> 15.0 / 5.0)) () = 3.0
+let t1f = (thunk (fun () -> 15 * 5)) () = 75
+let t1g = (thunk (fun () -> 15.0 /. 5.0)) () = 3.0
 
 let t2a = (thunk_of_value 4) () = 4
+let t2a = (thunk_of_value 10) () = 10
+(*let t2a = (thunk_of_value 15 + 5) () = 4
+let t2a = (thunk_of_value 15 - 5) () = 4
+let t2a = (thunk_of_value 15 ) () = 4*)
 
 let t3a = try (try (thunk_of_eval ((fun x -> raise (Failure "")), 4))
                with Failure "" -> (fun () -> false)) ()
@@ -35,7 +39,7 @@ let t6a = let f = fun () -> raise (Failure "")
              with Failure "" -> true
                 | _ -> false
 let t6b = thunk_map ((fun () -> 4), (fun x -> 2 * x)) () = 8
-
+(*)
 let t7a = let f = fun () -> raise (Failure "")
           in try (try thunk_of_list [f; f]
                   with Failure "" -> (fun () -> [])) () = []
@@ -43,7 +47,7 @@ let t7a = let f = fun () -> raise (Failure "")
                 | _ -> false
 let t7b = let f = fun () -> 5
           in thunk_of_list [f; f] () = [5; 5]
-
+*)
 let t8a = insert (empty, "foo", 3) = [("foo", 3)]
 
 let t9a = has ([("foo", 2)], "foo") = true
@@ -62,7 +66,7 @@ let t11a = lookup_opt ([("bar", 3); ("foo", 2)], "bar") = Some 3
 (* Again the search should be stopping after "foo" *)
 let t11b = lookup_opt ([("foo", 2); ("bar", 3)], "bar") = None
 
-let t12a = delete ([("bar", 3); ("baz", 1); ("foo", 2)], "baz") = [("baz", 1); ("foo", 2)]
+let t12a = delete ([("bar", 3); ("baz", 1); ("foo", 2)], "baz") = [("bar", 3); ("foo", 2)]
 
 let t13a = keys [("bar", 3); ("foo", 2)] = ["bar"; "foo"]
 

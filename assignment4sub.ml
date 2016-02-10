@@ -33,7 +33,7 @@ type 'a thunk = unit -> 'a
    and returns the `'a thunk` from it. This is an incredibly simple function.
    It should have type: (unit -> 'a) -> 'a thunk
 *)
-let thunk f () = f
+let thunk f = f 
 
 
 (*
@@ -64,9 +64,8 @@ let thunk_of_eval (f, a) = fun () -> f a
    after the "with" is a pattern.
    It should have type: 'a thunk -> 'a option
 *)
-let try_thunk f = try f with 
-                  | Not_found | Invalid_argument | Failure -> None
-                  | _ -> Some f
+let try_thunk f = try Some (f ()) with 
+                           | Not_found | Failure _ | Invalid_argument _ -> None
 
 
 (*
@@ -76,8 +75,7 @@ let try_thunk f = try f with
    returned thunk is called.
    It should have type: 'a thunk * 'b thunk -> ('a * 'b) thunk
 *)
-let thunk_of_pair (f, g) = fun () -> (f, g)
-   (*fun pair (f, g) -> (f (), g () )*)
+let thunk_of_pair (f , g) = fun () -> (f (), g ())
 
 
 (*
@@ -88,7 +86,7 @@ let thunk_of_pair (f, g) = fun () -> (f, g)
    the returned thunk is called.
    It should have type: 'a thunk * ('a -> 'b) -> 'b thunk
 *)
-let thunk_map (th, f) = 
+let thunk_map (th, f) = fun () -> f (th ())
 
 
 (*
@@ -99,9 +97,12 @@ let thunk_map (th, f) =
    called.
    It should have type: 'a thunk list -> 'a list thunk
 *)
-let thunk_of_list (lst) = f () -> match lst with
-                                  | 
-
+(*)
+let rec thunk_of_list lst =
+   match lst with
+   | [] -> []
+   | element :: rest -> element :: thunk_of_list rest
+*)
 
 
 (* ----------------------------------------
@@ -230,11 +231,9 @@ let rec lookup_opt (sTable, s) =
 let rec delete (sTable, s) =
    match sTable with
    | [] -> []
-   | (sElement, vElement) :: rest -> if s < sElement 
-                                     then (sElement, vElement) :: rest 
-                                     else if s = sElement 
-                                     then rest 
-                                     else delete (rest, s) 
+   | (sElement, vElement) :: rest -> if sElement = s
+                                     then delete (rest, s)
+                                     else (sElement, vElement) :: delete (rest, s) 
 
 
 (*
@@ -247,7 +246,7 @@ let rec keys sTable =
       match sTable with
       | [] -> []
       | (sElement, vElement) :: rest -> let acc = keys rest in
-                                          sElement :: lst
+                                          sElement :: acc
 
    in acc
 
@@ -261,9 +260,10 @@ let rec keys sTable =
 let rec is_proper sTable =
    match sTable with
    | [] -> true
+   | (sElement, vElement) :: [] -> true
    | (sElement, vElement) :: (sElement', vElement') :: rest -> 
      let answer = (sElement < sElement') in
-     let cont = is_proper ((sElement', vElement') :: rest) in
-         if answer = false || cont = false 
-         then false
-         else true
+        let cont = is_proper ((sElement', vElement') :: rest) in
+            if answer = false || cont = false 
+            then false
+            else true
