@@ -44,6 +44,10 @@ let t5a = let f = fun () -> raise (Failure "")
              with Failure "" -> true
                 | _ -> false
 let t5b = thunk_of_pair ((fun () -> 4), (fun () -> 5)) () = (4, 5)
+let t5c = thunk_of_pair ((fun () -> 4 + 6), (fun () -> 5 / 5)) () = (10, 1)
+let t5d = thunk_of_pair ((fun () -> 4.0), (fun () -> 5.0)) () = (4.0, 5.0)
+let t5e = thunk_of_pair ((fun () -> 4.0 -. 4.0), (fun () -> 5.0 *. 5.0)) () = (0.0, 25.0)
+
 
 let t6a = let f = fun () -> raise (Failure "")
           in try (try thunk_map (f, f)
