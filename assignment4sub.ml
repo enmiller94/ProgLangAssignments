@@ -260,6 +260,7 @@ let rec keys sTable =
    in acc
 
 
+
 (*
    Write a function `is_proper` that takes as input a symbol table and returns
    a boolean indicating if the table is "proper", namely if the invariant is
