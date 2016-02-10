@@ -125,3 +125,7 @@ let t13d = keys [("bar", 3); ("foo", 2); ("goo", 5); ("hoo", 7)] = ["bar"; "foo"
 
 
 let t14a = is_proper [("bar", 3); ("foo", 2)] = true
+let t14a = is_proper [("foo", 3); ("goo", 5); ("hoo", 7)] = true
+let t14a = is_proper [("zoo", 3); ("goo", 5); ("hoo", 7)] = false
+let t14a = is_proper [("foo", 3); ("goo", 5); ("hoo", 7); ("poo", 3); ("zoo", 5); ("too", 7)] = false
+let t14a = is_proper empty = true
