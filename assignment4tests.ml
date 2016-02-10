@@ -69,7 +69,14 @@ let t7a = let f = fun () -> raise (Failure "")
 let t7b = let f = fun () -> 5
           in thunk_of_list [f; f] () = [5; 5]
 *)
+
+
 let t8a = insert (empty, "foo", 3) = [("foo", 3)]
+let t8b = insert ([("doo", 5)], "foo", 3) = [("doo", 5); ("foo", 3)]
+let t8c = insert ([("goo", 5)], "foo", 3) = [("foo", 3); ("goo", 5)]
+let t8d = insert ([("foo", 3); ("hoo", 7)], "goo", 5) = [("foo", 3); ("goo", 5); ("hoo", 7)]
+let t8e = insert ([("foo", 3); ("goo", 5); ("hoo", 7)], "goo", 5) = [("foo", 3); ("goo", 5); ("hoo", 7)]
+
 
 let t9a = has ([("foo", 2)], "foo") = true
 
