@@ -277,3 +277,6 @@ let rec is_proper sTable =
             if answer = false || cont = false 
             then false
             else true
+
+
+            
