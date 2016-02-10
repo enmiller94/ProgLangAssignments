@@ -67,7 +67,7 @@ let thunk_of_eval (f, a) = fun () -> f a
    It should have type: 'a thunk -> 'a option
 *)
 let try_thunk f = try Some (f ()) with 
-                           | Not_found | Failure _ | Invalid_argument _ -> None
+                  | Not_found | Failure _ | Invalid_argument _ -> None
 
 
 
