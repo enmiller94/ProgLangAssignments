@@ -110,6 +110,7 @@ let rec thunk_of_list lst =
 *)
 
 
+
 (* ----------------------------------------
                LOOKUP TABLES
    ---------------------------------------- *)
@@ -204,7 +205,6 @@ let rec lookup (sTable, s) =
                                      else if s = sElement
                                      then vElement
                                      else lookup (rest, s)
-
 
 
 (*
