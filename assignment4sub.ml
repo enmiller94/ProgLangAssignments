@@ -69,7 +69,6 @@ let thunk_of_eval (f, a) = fun () -> f a
 let try_thunk f = try Some (f ()) with 
                            | Not_found | Failure _ | Invalid_argument _ -> None
 
-
 (*
    Write a function `thunk_of_pair` that takes as input a pair of thunks, and returns
    the thunk that if evaluated would produce the pair of values that those two thunks
