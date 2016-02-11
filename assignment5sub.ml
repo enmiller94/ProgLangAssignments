@@ -34,6 +34,7 @@
 
    The following type defines this:
 *)
+
 type calc = Var
           | Int of int
           | Add of calc * calc
@@ -47,6 +48,13 @@ type calc = Var
    it. Do NOT use the `count_vars` that follows.
    It should have type calc -> bool
 *)
+let rec has_vars calculation =
+   match calculation with 
+   | Var -> true
+   | Int _ -> false
+   | Parity c -> has_vars c
+   | Add (c, c') | Sub (c, c') | Mul (c, c') -> has_vars c || has_vars c'
+
 
 
 (*
@@ -54,6 +62,17 @@ type calc = Var
    number of references to the variable in that calculation. Do NOT use `has_vars`.
    It should have type: calc -> int
 *)
+let rec count_vars calculation = 
+   match calculation with
+   | Var -> 1
+   | Int _ -> 0
+   | Parity c -> count_vars c
+   | Add (c, c') | Sub (c, c') | Mul (c, c') -> let acc = 0 in
+                                                            if has_vars c && has_vars c'
+                                                            then acc + 2
+                                                            else if has_vars c || has_vars c'
+                                                            then acc + 1
+                                                            else acc
 
 
 (*
@@ -62,8 +81,17 @@ type calc = Var
    described above.
    It should have type: calc * int -> int
 *)
-
-
+let rec calc_eval (calculation, x) = 
+   match calculation with 
+   | Var -> x
+   | Int i -> i
+   | Add (c, c') -> calc_eval (c, x) + calc_eval (c', x)
+   | Sub (c, c') -> calc_eval (c, x) - calc_eval (c', x)
+   | Mul (c, c') -> calc_eval (c, x) * calc_eval (c', x)
+   | Parity c -> let answer = calc_eval (c, x) in
+                     if answer mod 2 = 0 
+                     then 0
+                     else 1
 
 (*
    Write a function `func_of_calc` that takes as input a calculation and returns
@@ -73,7 +101,8 @@ type calc = Var
    It should have type: calc -> (int -> int)
    (though the parentheses will not show)
 *)
-
+let func_of_calc calculation = 
+   fun x -> calc_eval (calculation, x)
 
 
 (*
@@ -82,7 +111,14 @@ type calc = Var
    the variable in c2 with c1.
    It should have type: calc * calc -> calc
 *)
-
+let rec subst (c1, c2) = 
+   match c2 with
+   | Var -> c1
+   | Int i -> Int i
+   | Parity c -> subst (c1, c)
+   | Add (c, c') -> Add (subst (c1, c), subst (c1, c'))
+   | Sub (c, c') -> Sub (subst (c1, c), subst (c1, c'))
+   | Mul (c, c') -> Mul (subst (c1, c), subst (c1, c'))
 
 
 (*
@@ -97,6 +133,20 @@ type calc = Var
    It should have type: calc * int -> calc
 *)
 
+let rec power (calculation, n)=
+   
+
+   if n = 0
+   then Int 1
+   else if n = 1
+   then calculation
+   else let rec aux (acc) = 
+            let acc' = acc in
+               if acc' = 0
+               then Mul (calculation, calculation)
+               else Mul (aux acc' , calculation)
+        in aux (n)
+
 
 
 (*
@@ -110,7 +160,8 @@ type calc = Var
    - When the coefficient "a" is 1.
    It should have type: int * int -> calc
 *)
-
+let term (a, n) = 
+   Mul (Int a, power (Var, n))
 
 (*
    Write a function `poly` that takes as input a list of pairs of integers
@@ -124,9 +175,18 @@ type calc = Var
    - If a "term" has zero coefficient, it should be skipped.
    It should have type: (int * int) list -> calc
 *)
-
-
-
+(*)
+let rec poly (lst) = 
+   match lst' with
+   | [] -> Int 0
+   | (0, t') :: [] -> Int 0
+   | (t, t') :: [] -> if t = 0
+                      then 
+                      else term (t, t')
+   | (t, t') :: rest -> if t = 0
+                        then aux rest
+                        else term (t, t') + aux rest
+*)
 (*
    This is a difficult problem, with many objectives. Do as much of it as you can.
    Some of the later objectives are harder.
