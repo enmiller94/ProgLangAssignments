@@ -60,7 +60,7 @@ let t6d = thunk_map ((fun () -> 4.0), (fun x -> 2.0 /. x)) () = 0.5
 let t6e = thunk_map ((fun () -> 4), (fun x -> 2 + x)) () = 6
 
 
-(*)
+
 let t7a = let f = fun () -> raise (Failure "")
           in try (try thunk_of_list [f; f]
                   with Failure "" -> (fun () -> [])) () = []
@@ -68,7 +68,13 @@ let t7a = let f = fun () -> raise (Failure "")
                 | _ -> false
 let t7b = let f = fun () -> 5
           in thunk_of_list [f; f] () = [5; 5]
-*)
+let t7c = let f = fun () -> 5 in
+            let g = fun () -> 10 in
+              thunk_of_list [f; g] () = [5; 10]
+let t7d = let f = fun () -> 5.0 +. 5.0 in
+            let g = fun () -> 10.0 -. 10.0 in
+              thunk_of_list [f; g] () = [10.0; 0.0]
+
 
 
 let t8a = insert (empty, "foo", 3) = [("foo", 3)]

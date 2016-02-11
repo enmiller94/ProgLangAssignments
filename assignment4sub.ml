@@ -68,7 +68,6 @@ let thunk_of_eval (f, a) = fun () -> f a
 *)
 let try_thunk f = try Some (f ()) with 
                   | exn -> None
-                  (*| Not_found | Failure _ | Invalid_argument _ -> None*)
 
 
 
@@ -104,12 +103,10 @@ let thunk_map (th, f) = fun () -> f (th ())
    It should have type: 'a thunk list -> 'a list thunk
 *)
 
-let rec thunk_of_list lst =
+let rec thunk_of_list lst = fun () -> 
    match lst with
    | [] -> []
-   | element :: rest -> element () :: thunk_of_list rest
-
-
+   | element :: rest -> element () :: thunk_of_list rest ()
 
 (* ----------------------------------------
                LOOKUP TABLES
