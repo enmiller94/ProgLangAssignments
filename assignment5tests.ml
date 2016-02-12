@@ -15,6 +15,17 @@ let t8m = has_vars (Var)
 
 let t9a = count_vars (Add (Var, Int 2)) = 1
 let t9b = count_vars (Add (Int 1, Int 2)) = 0
+let t9c = count_vars (Add (Var, Var)) = 2
+let t9d = count_vars (Mul (Var, Int 2)) = 1
+let t9e = count_vars (Mul (Int 2, Int 2)) = 0
+let t9f = count_vars (Mul (Var, Var)) = 2
+let t9g = count_vars (Sub (Var, Int 2)) = 1
+let t9h = count_vars (Sub (Int 2, Int 2)) = 0
+let t9i = count_vars (Sub (Var, Var)) = 2
+let t9j = count_vars (Parity (Var)) = 1
+let t9k = count_vars (Parity (Int 2)) = 0
+let t9l = count_vars (Int 2) = 0
+let t9m = count_vars (Var) = 1
 
 let t10a = calc_eval (Add (Var, Int 2), 3) = 5
 
