@@ -1,6 +1,17 @@
 (* CALCULATIONS *)
 let t8a = has_vars (Add (Var, Int 2))
 let t8b = not (has_vars (Add (Int 1, Int 2)))
+let t8c = has_vars (Add (Var, Var))
+let t8d = has_vars (Mul (Var, Int 2))
+let t8e = not (has_vars (Mul (Int 2, Int 2)))
+let t8f = has_vars (Mul (Var, Var))
+let t8g = has_vars (Sub (Var, Int 2))
+let t8h = not(has_vars (Sub (Int 2, Int 2)))
+let t8i = has_vars (Sub (Var, Var))
+let t8j = has_vars (Parity (Var))
+let t8k = not (has_vars (Parity (Int 2)))
+let t8l = not (has_vars (Int 2))
+let t8m = has_vars (Var)
 
 let t9a = count_vars (Add (Var, Int 2)) = 1
 let t9b = count_vars (Add (Int 1, Int 2)) = 0
