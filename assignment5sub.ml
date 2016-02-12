@@ -54,9 +54,6 @@ let rec has_vars calculation =
    | Int _ -> false
    | Parity c -> has_vars c
    | Add (c, c') | Sub (c, c') | Mul (c, c') -> has_vars c || has_vars c'
-
-
-
 (*
    Write a function `count_vars` that takes as input a calculation and returns the
    number of references to the variable in that calculation. Do NOT use `has_vars`.
@@ -73,8 +70,6 @@ let rec count_vars calculation =
                                                             else if has_vars c || has_vars c'
                                                             then acc + 1
                                                             else acc
-
-
 (*
    Write a function `calc_eval` that takes as input a pair of a calculation and an
    integer x, and proceeds to "evaluate" the calculation according to the meanings
@@ -92,7 +87,6 @@ let rec calc_eval (calculation, x) =
                      if answer mod 2 = 0 
                      then 0
                      else 1
-
 (*
    Write a function `func_of_calc` that takes as input a calculation and returns
    a function `int -> int` that given an integer would evaluate that calculation
@@ -103,8 +97,6 @@ let rec calc_eval (calculation, x) =
 *)
 let func_of_calc calculation = 
    fun x -> calc_eval (calculation, x)
-
-
 (*
    Write a function `subst` that takes as input a pair of calculations (c1, c2)
    and returns the calculation that results if we substitute every instance of
@@ -119,8 +111,6 @@ let rec subst (c1, c2) =
    | Add (c, c') -> Add (subst (c1, c), subst (c1, c'))
    | Sub (c, c') -> Sub (subst (c1, c), subst (c1, c'))
    | Mul (c, c') -> Mul (subst (c1, c), subst (c1, c'))
-
-
 (*
    Write a function `power` that takes as input a pair of a calculation and an
    integer n, and returns the calculation that amounts to computing the n-th power
@@ -132,7 +122,6 @@ let rec subst (c1, c2) =
    n = 1, when the result should be the calculation itself.
    It should have type: calc * int -> calc
 *)
-
 let rec power (calculation, n)=
    
 
@@ -141,14 +130,11 @@ let rec power (calculation, n)=
    else if n = 1
    then calculation
    else let rec aux (acc) = 
-            let acc' = acc in
-               if acc' = 0
+            let acc' = acc - 1 in
+               if acc' = 1
                then Mul (calculation, calculation)
                else Mul (aux acc' , calculation)
         in aux (n)
-
-
-
 (*
    Write a function `term` that takes as input a pair of integers `(a, n)` and
    returns the calculation representing the "term" `a * x^n` ("a" times the
@@ -162,7 +148,6 @@ let rec power (calculation, n)=
 *)
 let term (a, n) = 
    Mul (Int a, power (Var, n))
-
 (*
    Write a function `poly` that takes as input a list of pairs of integers
    representing terms as in the previous function, and returns the "polynomial"
@@ -181,18 +166,24 @@ let term (a, n) =
    cases.
    It should have type: (int * int) list -> calc
 *)
-(*)
 let rec poly (lst) = 
-   match lst' with
+   match lst with
    | [] -> Int 0
    | (0, t') :: [] -> Int 0
-   | (t, t') :: [] -> if t = 0
-                      then 
-                      else term (t, t')
-   | (t, t') :: rest -> if t = 0
-                        then aux rest
-                        else term (t, t') + aux rest
-*)
+   | (t, t') :: [] -> term (t, t')
+   | (0, t') :: (0, tt') :: rest -> poly rest
+   | (0, t') :: (tt, tt') :: rest -> let answer = poly rest in
+                                     if answer = Int 0
+                                     then term (tt, tt')
+                                     else Add (term (tt, tt'), poly rest)
+   | (t, t') :: (0, tt') :: rest -> let answer = poly rest in 
+                                    if answer = Int 0
+                                    then term (t, t')
+                                    else Add (term (t, t'), poly rest)
+   | (t, t') :: rest -> let answer = poly rest in
+                           if answer = Int 0
+                           then term (t, t')
+                           else Add (term (t, t'), answer)
 (*
    This is a difficult problem, with many objectives. Do as much of it as you can.
    Some of the later objectives are harder.
@@ -241,18 +232,68 @@ let rec poly (lst) =
    Make sure to preserve the order of terms on this step.
 
 *)
-(* This function stub is commented out for now so as not to throw errors when
-   you work on the previous part. Delete the comment part when you want to start
-   working on this function.
-
 let rec simplify c =
    let c' =
-      match c with
-      | Var -> ...        (* this one's easy *)
-      | Int i -> ...      (* so is this *)
-      | Add ... -> ...    (* special add case here *)
-      | Add (c1, c2) -> Add (simplify c1, simplify c2)
-   (* more cases here. Do not use the catchall *)
+      match c with 
+      (*Base Cases - Var, Int*)
+      | Var -> Var 
+      | Int i -> Int i 
+      (*Addition - 0, regular*)
+      | Add (Int 0, c1) | Add (c1, Int 0) -> c1
+      | Add (c1, c2) -> Add (simplify c1, simplify c2) 
+      (*Subtraction - 0, regular*)
+      | Sub (c1, Int 0) -> c1
+      (*| Sub (Int 0, c) -> Int (-c)*)
+      | Sub (c1, Int i) -> Add (c1, Int (-i))
+      | Sub (c1, c2) -> Sub (simplify c1, simplify c2)
+      (*Multiplication - 0, 1, regular*)
+      | Mul (Int 0, c1) | Mul (c1, Int 0) -> Int 0
+      | Mul (Int 1, c1) | Mul (c1, Int 1) -> Int 1
+      | Mul (c1, c2) -> Mul (simplify c1, simplify c2)
+      (*Parity*)
+      | Parity c1 -> c1
+      (*Move Int from second to first*)
+      (*THIS IS WHERE IS SAYS CASES ARE UNUSED*)
+      | Add (Var, Int i) -> Add (Int i, Var)
+      | Add (Add (c1, c2), Int i) -> Add (Int i, Add (c1, c2))
+      | Add (Sub (c1, c2), Int i) -> Add (Int i, Sub (c1, c2))
+      | Add (Mul (c1, c2), Int i) -> Add (Int i, Mul (c1, c2))
+      | Add (Parity c1, Int i) -> Add (Int i, Parity c1)
+      | Mul (Var, Int i) -> Mul (Int i, Var)
+      | Mul (Add (c1, c2), Int i) -> Mul (Int i, Add (c1, c2))
+      | Mul (Sub (c1, c2), Int i) -> Mul (Int i, Sub (c1, c2))
+      | Mul (Mul (c1, c2), Int i) -> Mul (Int i, Mul (c1, c2))
+      | Mul (Parity c1, Int i) -> Mul (Int i, Parity c1)
+      (*Change from a + (b + c) -> (a + b) + c*)
+      | Add (calculation, Add (c1, c2)) -> Add (Add (calculation, c1), c2)
+      (*Change from a * (b * c) -> (a * b) * c*)
+      | Mul (calculation, Mul (c1, c2)) -> Mul (Mul (calculation, c1), c2)
+      (*Combining like terms = (a*b)+(a*c) -> a*(b+c) && (b*a) + (c*a) replaced by (b+c)*a*)
+      | Add (Mul (a1, b), Mul (a2, c1)) -> if a1 = a2
+                                           then Mul (a1, Add (b, c1))
+                                           else Add (Mul (a1, b), Mul (a2, c1))
+      | Add (Mul (b, a1), Mul (c1, a2)) -> if a1 = a2
+                                           then Mul (Add (b, c1), a1)
+                                           else Add (Mul (b, a1), Mul (c1, a2)) 
+      (*Simplifying terms = a+a -> 2*a*)
+      | Add (c1, c2) -> if c1 = c2
+                        then Mul (Int 2, c1)
+                        else Add (c1, c2)
+      (*Subtractions of the same number*)
+      | Sub (c1, c2) -> if c1 = c2
+                        then Int 0
+                        else Sub (c1, c2)
+      (*Common factor = `b*a + a`, `a*b + a`, `a + b*a`, `a + a*b` *)
+      | Add (Mul (b, a1), a2) -> if a1 = a2
+                                 then Mul (a1, Add (b, Int 1))
+                                 else Add (Mul (b, a1), a2)
+      | Add (Mul (a1, b), a2) -> if a1 = a2
+                                 then Mul (a1, Add (b, Int 1))
+                                 else Add (Mul (a1, b), a2)
+      | Add (a1, Mul (b, a2)) -> if a1 = a2
+                                 then Mul (a1, Add (Int 1, b))
+                                 else Add (a1, Mul (b, a2))
+      | Add (a1, Mul (a2, b)) -> if a1 = a2
+                                 then Mul (a1, Add (Int 1, b))
+                                 else Add (a1, Mul (a2, b))
    in if c' = c then c' else simplify c'
-
-*)
