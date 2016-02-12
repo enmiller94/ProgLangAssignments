@@ -54,6 +54,9 @@ let rec has_vars calculation =
    | Int _ -> false
    | Parity c -> has_vars c
    | Add (c, c') | Sub (c, c') | Mul (c, c') -> has_vars c || has_vars c'
+
+
+
 (*
    Write a function `count_vars` that takes as input a calculation and returns the
    number of references to the variable in that calculation. Do NOT use `has_vars`.
@@ -70,6 +73,9 @@ let rec count_vars calculation =
                                                             else if has_vars c || has_vars c'
                                                             then acc + 1
                                                             else acc
+
+
+
 (*
    Write a function `calc_eval` that takes as input a pair of a calculation and an
    integer x, and proceeds to "evaluate" the calculation according to the meanings
@@ -87,6 +93,9 @@ let rec calc_eval (calculation, x) =
                      if answer mod 2 = 0 
                      then 0
                      else 1
+
+
+
 (*
    Write a function `func_of_calc` that takes as input a calculation and returns
    a function `int -> int` that given an integer would evaluate that calculation
@@ -97,6 +106,9 @@ let rec calc_eval (calculation, x) =
 *)
 let func_of_calc calculation = 
    fun x -> calc_eval (calculation, x)
+
+
+
 (*
    Write a function `subst` that takes as input a pair of calculations (c1, c2)
    and returns the calculation that results if we substitute every instance of
@@ -111,6 +123,9 @@ let rec subst (c1, c2) =
    | Add (c, c') -> Add (subst (c1, c), subst (c1, c'))
    | Sub (c, c') -> Sub (subst (c1, c), subst (c1, c'))
    | Mul (c, c') -> Mul (subst (c1, c), subst (c1, c'))
+
+
+
 (*
    Write a function `power` that takes as input a pair of a calculation and an
    integer n, and returns the calculation that amounts to computing the n-th power
@@ -123,8 +138,6 @@ let rec subst (c1, c2) =
    It should have type: calc * int -> calc
 *)
 let rec power (calculation, n)=
-   
-
    if n = 0
    then Int 1
    else if n = 1
@@ -135,6 +148,9 @@ let rec power (calculation, n)=
                then Mul (calculation, calculation)
                else Mul (aux acc' , calculation)
         in aux (n)
+
+
+
 (*
    Write a function `term` that takes as input a pair of integers `(a, n)` and
    returns the calculation representing the "term" `a * x^n` ("a" times the
@@ -148,6 +164,9 @@ let rec power (calculation, n)=
 *)
 let term (a, n) = 
    Mul (Int a, power (Var, n))
+
+
+
 (*
    Write a function `poly` that takes as input a list of pairs of integers
    representing terms as in the previous function, and returns the "polynomial"
@@ -173,17 +192,20 @@ let rec poly (lst) =
    | (t, t') :: [] -> term (t, t')
    | (0, t') :: (0, tt') :: rest -> poly rest
    | (0, t') :: (tt, tt') :: rest -> let answer = poly rest in
-                                     if answer = Int 0
-                                     then term (tt, tt')
-                                     else Add (term (tt, tt'), poly rest)
+                                        if answer = Int 0
+                                        then term (tt, tt')
+                                        else Add (term (tt, tt'), poly rest)
    | (t, t') :: (0, tt') :: rest -> let answer = poly rest in 
-                                    if answer = Int 0
-                                    then term (t, t')
-                                    else Add (term (t, t'), poly rest)
+                                       if answer = Int 0
+                                       then term (t, t')
+                                       else Add (term (t, t'), poly rest)
    | (t, t') :: rest -> let answer = poly rest in
-                           if answer = Int 0
-                           then term (t, t')
-                           else Add (term (t, t'), answer)
+                              if answer = Int 0
+                              then term (t, t')
+                              else Add (term (t, t'), answer)
+
+
+                           
 (*
    This is a difficult problem, with many objectives. Do as much of it as you can.
    Some of the later objectives are harder.
