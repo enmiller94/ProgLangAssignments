@@ -57,6 +57,16 @@ let t11m = func_of_calc (Var) 3 = 3
 
 let t12a = subst (Add (Var, Int 1), Mul (Var, Var)) =
                 Mul (Add (Var, Int 1), Add (Var, Int 1))
+let t12b = subst (Mul (Var, Int 1), Add (Var, Var)) =
+                Add (Mul (Var, Int 1), Mul (Var, Int 1))
+let t12c = subst (Sub (Var, Int 1), Mul (Var, Var)) =
+                Mul (Sub (Var, Int 1), Sub (Var, Int 1))
+let t12d = subst (Int 5, Mul (Var, Var)) =
+                Mul (Int 5, Int 5)
+let t12e = subst (Parity (Int 5), Add (Var, Var)) =
+                Add (Parity (Int 5), Parity (Int 5))
+let t12f = subst (Int 5, Var) =
+                Int 5
 
 let t13a = power 3 = Mul (Mul (Var, Var), Var)
 
