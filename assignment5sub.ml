@@ -55,8 +55,6 @@ let rec has_vars calculation =
    | Parity c -> has_vars c
    | Add (c, c') | Sub (c, c') | Mul (c, c') -> has_vars c || has_vars c'
 
-
-
 (*
    Write a function `count_vars` that takes as input a calculation and returns the
    number of references to the variable in that calculation. Do NOT use `has_vars`.
