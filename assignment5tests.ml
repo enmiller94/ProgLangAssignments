@@ -74,9 +74,13 @@ let t13c = power (Var, 1) = Var
 let t13d = power (Var, 5) = Mul (Mul (Mul (Mul (Var, Var), Var), Var), Var)
 
 let t14a = term (2, 1) = Mul(Int 2, Var)
-(*)
-let t15a = poly [(2, 1); (1, 4)] = Add (term (2, 1), term (1, 4))
+let t14b = term (0, 5) = Mul(Int 0, Mul (Mul (Mul (Mul (Var, Var), Var), Var), Var))
+let t14c = term (1, 1) = Mul(Int 1, Var)
+let t14d = term (5, 3) = Mul(Int 5, Mul (Mul (Var, Var), Var))
+let t14e = term (2, 0) = Mul(Int 2, Int 1)
 
+let t15a = poly [(2, 1); (1, 4)] = Add (term (2, 1), term (1, 4))
+(*
 let t16a = simplify (Add (Int 0, Var)) = Var
 let t16b = simplify (Add (Int 3, Int 4)) = Int 7
 let t16c = calc_eval (simplify (poly [(2, 1); (1, 0)]), 3) = 7
