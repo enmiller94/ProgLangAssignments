@@ -80,8 +80,14 @@ let t14d = term (5, 3) = Mul(Int 5, Mul (Mul (Var, Var), Var))
 let t14e = term (2, 0) = Mul(Int 2, Int 1)
 
 let t15a = poly [(2, 1); (1, 4)] = Add (term (2, 1), term (1, 4))
-(*
+let t15b = poly [(2, 1); (1, 4); (0, 1); (1, 4)] = Add (term (2, 1), Add (term (1, 4), term (1, 4)))
+let t15c = poly [] = Int 0
+let t15d = poly [(0, 1); (0, 4); (0, 5); (0, 3)] = Int 0
+let t15e = poly [(0, 1); (1, 4); (0, 5); (0, 3)] = term (1, 4)
+let t15f = poly [(1, 1); (0, 4); (0, 5); (0, 3)] = term (1, 1)
+let t15g = poly [(1, 1); (1, 4); (0, 5); (1, 3)] = Add (term (1, 1), Add (term (1,4), term (1, 3)))
+
 let t16a = simplify (Add (Int 0, Var)) = Var
 let t16b = simplify (Add (Int 3, Int 4)) = Int 7
 let t16c = calc_eval (simplify (poly [(2, 1); (1, 0)]), 3) = 7
-*)
+
