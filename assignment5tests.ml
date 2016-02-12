@@ -28,6 +28,18 @@ let t9l = count_vars (Int 2) = 0
 let t9m = count_vars (Var) = 1
 
 let t10a = calc_eval (Add (Var, Int 2), 3) = 5
+let t10b = calc_eval (Add (Int 2, Int 2), 3) = 4
+let t10c = calc_eval (Add (Var, Var), 3) = 6
+let t10d = calc_eval (Mul (Var, Int 2), 3) = 6
+let t10e = calc_eval (Mul (Int 2, Int 2), 3) = 4
+let t10f = calc_eval (Mul (Var, Var), 3) = 9
+let t10g = calc_eval (Sub (Var, Int 2), 3) = 1
+let t10h = calc_eval (Sub (Int 2, Int 2), 3) = 0
+let t10i = calc_eval (Sub (Var, Var), 3) = 0
+let t10j = calc_eval (Parity (Var), 3) = 1
+let t10k = calc_eval (Parity (Int 2), 3) = 0
+let t10l = calc_eval (Int 2, 3) = 2
+let t10m = calc_eval (Var, 3) = 3
 
 let t11a = func_of_calc (Add (Var, Int 2)) 3 = 5
 
