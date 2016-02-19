@@ -1,15 +1,20 @@
 (* These tests assume that you have implemented the function `take` as suggested *)
 let t1a = take 4 (const 3) = [3; 3; 3; 3]
+let t1b = take 10 (const 100) = [100; 100; 100; 100; 100; 100; 100; 100; 100; 100]
 
 let t2a = take 5 (alt 3 4) = [3; 4; 3; 4; 3]
+let t2b = take 6 (alt 5 10) = [5; 10; 5; 10; 5; 10]
 
 let t3a = take 3 (seq 2 6) = [2; 8; 14]
+let t3b = take 5 (seq 5 10) = [5; 15; 25; 35; 45]
 
 let t4a = take 5 (from_f (fun x -> x * x)) = [1; 4; 9; 16; 25]
 (* The next test ensures that the function is not called until the corresponding
    value is actually needed. *)
 let t4b = try (ignore (from_f (fun _ -> raise (Failure ""))); true) with
           | _ -> false
+let t4c = take 5 (from_f (fun x -> x * 1)) = [1; 2; 3; 4; 5]
+let t4d = take 5 (from_f (fun x -> x + x)) = [2; 4; 6; 8; 10]
 
 let t5a = take 5 (from_list [3; 5; 6]) = [3; 5; 6; 3; 5]
 
