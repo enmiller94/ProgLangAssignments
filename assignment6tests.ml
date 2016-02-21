@@ -46,6 +46,7 @@ let t10a = take 3 (zip2 (seq 1 2) (seq 2 3)) = [(1, 2); (3, 5); (5, 8)]
 let t10b = take 3 (zip2 (seq 1 1) (seq 1 0)) = [(1, 1); (2, 1); (3, 1)]
 
 let t11a = take 4 (accum (+) 0 (seq 1 1)) = [0; 1; 3; 6]
+let t11b = take 4 (accum (-) 10 (seq 1 1)) = [10; 9; 7; 4]
 
 let t12a = take 4 (filter (fun x -> x mod 2 = 0) (seq 1 1)) = [2; 4; 6; 8]
 let t12b = take 4 (filter (fun x -> x mod 2 = 1) (seq 1 1)) = [1; 3; 5; 7]
@@ -57,4 +58,3 @@ let t13c = take 5 (collect 1 (seq 1 1)) = [[1]; [2]; [3]; [4]; [5]]
 
 let t14a = take 5 (flatten (collect 3 (seq 1 1))) = [1; 2; 3; 4; 5]
 let t14b = take 5 (flatten (collect 3 (seq 1 2))) = [1; 3; 5; 7; 9]
-let t14c = take 5 (flatten ([[]; [1]; []; [1; 5; 6; 7]]) = [1; 1; 5; 6; 7]
