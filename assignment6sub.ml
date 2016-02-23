@@ -3,7 +3,6 @@
    You should write your functions in this file.
    You should NOT specify the types of your functions. Let the system determine
    them for you.
-
    Write your code right below the corresponding comment describing the
    function you are asked to write.
 *)
@@ -21,7 +20,6 @@
    values forever. A simple stream is one that returns the same value all the
    time. Another is a stream that produces the natural numbers one after the
    other, like 1, 2, 3, ...
-
    In this assignment you will implement a number of methods for streams. We start
    with the definition of a stream, which will take a moment to digest. It is a
    self-referential definition with a single type variant. There is no "terminating"
@@ -64,7 +62,6 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    the 'a stream is not calculated until the first element of the 'b stream has to be
    calculated, and so on. There is a test provided for the map case to ensure that does
    not happen in that case.
-
    As another example, if the function in `from_f` simply raises an exception when
    called, then creating the stream should NOT raise an exception, but trying to get
    the first value of the stream via say `take1` should.
@@ -79,14 +76,16 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    a stream of type `'a stream` that keeps producing that value over and over.
    It should have type `'a -> 'a stream`.
 *)
-
+let rec const given = 
+   St (fun () -> (given, const given))
 
 (*
    Write a function `alt` that takes as input two values of some type `'a` and returns
    a stream of type `'a stream` that keeps alternating between those two values.
    It should have type `'a -> 'a -> 'a stream`.
 *)
-
+let rec alt given1 given2 =
+   St (fun () -> (given1, alt given2 given1))
 
 
 (*
@@ -95,13 +94,18 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    up by step each time.
    It should have type `int -> int -> int stream`
 *)
-
+let rec seq a step =
+   St (fun () -> (a, seq (a + step) step))
 
 (*
    Write a function `from_f` that takes as input a function `int -> 'a` and returns
    an `'a stream` that produces in turn the values f 1, f 2, f 3 and so on.
    It should have type `(int -> 'a) -> 'a stream`.
 *)
+let from_f f =
+   let rec next i =
+      St (fun () -> (f i, next (i + 1)))
+   in next 1
 
 (*
    Write a function `from_list` that takes as input an `'a list` and returns a stream
@@ -111,7 +115,13 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    in search of the (nonexistent) next value, and that is OK.
    It should have type `'a list -> 'a stream`.
 *)
-
+let from_list lst = 
+   let lst' = lst in
+      let rec lst_tracker lst'' = 
+         St (fun () -> match lst'' with 
+                       | element :: [] -> (element, lst_tracker lst) 
+                       | element :: rest -> (element, lst_tracker rest)) 
+      in lst_tracker lst'
 
 (* Stream users. These functions take as input a stream, and either produce some value
    or a new stream.
@@ -121,7 +131,11 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    returns a list of the first n elements of the stream (and the empty list if n<=0).
    It should have type `int -> 'a stream -> 'a list`.
 *)
-
+let rec take n (St th) =
+   if n = 0 
+   then []
+   else let (v, st') = th () in
+      v :: take (n - 1) st' 
 
 (*
    Write a function `drop` that takes as input a number `n` and a stream `st` and
@@ -129,7 +143,11 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    So for instance when n<=0 the original stream would be returned.
    It should have type `int -> 'a stream -> 'a stream`.
 *)
-
+let rec drop n (St th) = 
+   if n <= 0 
+   then St th 
+   else let (v, st') = th () in 
+      drop (n - 1) st' 
 
 (*
    Write a function `prepend` that takes as input a `'a list` and a `'a stream` and
@@ -137,7 +155,10 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    the provided stream.
    It should have type: `'a list -> 'a stream -> 'a stream`.
 *)
-
+let rec prepend lst strm =
+   match lst with 
+   | [] -> strm 
+   | element :: rest -> St (fun () -> (element, prepend rest strm)) 
 
 (*
    Write a function `map` that takes as input a function `'a -> 'b` and a `'a stream`,
@@ -147,7 +168,10 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    be 1, 4, 9, ...
    It should have type `('a -> 'b) -> 'a stream -> 'b stream`.
 *)
-
+(*ISSUES: has type ('a * 'a stream -> 'b) -> 'a stream -> 'b stream*)
+let rec map f (St th) =
+   let (v, st) = th () in
+      St (fun () -> (f v, map f st))
 
 (*
    Write a function `pair_up` that takes as input a `'a stream` and returns a
@@ -156,24 +180,38 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    would have values (1, 2), (3, 4), (5, 6), ...
    It should have type `'a stream -> ('a * 'a) stream`.
 *)
-
+let rec pair_up (St th) =
+  let (v1, (St th')) = th () in
+      let (v2, strm) = th' () in 
+         St (fun () -> ((v1, v2), pair_up strm))
 
 (*
    Write a function `zip2` that takes as input a `'a stream` and a `'b stream` and
    returns a `('a * 'b) stream` by pairing together the corresponding values.
    It should have type `'a stream -> 'b stream -> ('a * 'b) stream`.
 *)
-
+let rec zip2 (St th1) (St th2) =
+   St (fun () -> let (v1, st1) = th1 () in
+                     let  (v2, st2) = th2 () in 
+                     ((v1, v2), zip2 st1 st2))
 
 (*
    Write a function `accum` that takes as input a function `'b -> 'a -> 'b`, an initial
    value of type `'b` and an `'a` stream, and produces a `'b stream` that at each step
    accumulates (folds) the values up to that point. For instance if the initial
-   steam is 1, 2, 3, 4, 5, ... and the function is addition with an initial value of 5,
+   stream is 1, 2, 3, 4, 5, ... and the function is addition with an initial value of 5,
    then the resulting stream would be 5, 6, 8, 11, 15, 20, ...
    It should have type `('b -> 'a -> 'b) -> 'b -> 'a stream -> 'b stream`.
 *)
-
+let rec accum f i strm = 
+   let rec initial_ch num i' strm' = 
+      St (fun () -> if num = 0 
+                    then (i', initial_ch (num + 1) i' strm') 
+                    else let (St th) = strm' in 
+                           let (v, st') = th () in 
+                              let i' = (f i' v) in 
+                                 (i', initial_ch num i' st')) 
+   in initial_ch 0 i strm
 
 (*
    Write a function `filter` that takes as input a predicate function `'a -> bool` and
@@ -184,7 +222,11 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    value, if for example the predicate returns always false.
    It should have type `('a -> bool) -> 'a stream -> 'a stream`.
 *)
-
+let rec filter f (St th) = 
+   let (v, st') = th () in 
+      if f v 
+      then St (fun () -> (v, filter f st')) 
+      else filter f st' 
 
 (*
    Write a function `collect` that takes as input an integer `n > 0` and a `'a stream`
@@ -193,7 +235,13 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    then `collect 3 st` is the stream [1;2;3], [4;5;6], [7;8;9], ...
    It should have type `int -> 'a stream -> 'a list stream`.
 *)
-
+let rec collect i strm = 
+   let rec acc_lst num lst (St th) = 
+      let (v, st) = th () in 
+         if num = 1 
+         then St (fun () -> (List.rev (v :: lst), collect i st)) 
+         else acc_lst (num - 1) (v :: lst) st 
+   in acc_lst i [] strm 
 
 (*
    Write a function `flatten` that takes as input a `'a list stream` and "flattens" it
@@ -204,4 +252,11 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    the lists are empty.
    It should have type: `'a list stream -> 'a stream`,
 *)
-
+let rec flatten (St th) = 
+   let (v, st) = th () in 
+      let rec trav_lst lst = 
+         match lst with 
+         | [] -> flatten st 
+         | element :: rest -> St (fun () -> (element, trav_lst rest))
+      in trav_lst v 
+      
