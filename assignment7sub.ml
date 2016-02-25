@@ -48,10 +48,20 @@ let sword = [
 [D;D;D;D;D;D;D;D;D;D;D;D;D;D;H;H];
 [D;D;D;D;D;D;D;D;D;D;D;D;D;D;H;H]]
 
-(*
-   You need to fix this.
-*)
-let doodad = []
+let doodad = [
+[H;H;H;H;H;H;H];
+[H;D;D;D;D;D;H];
+[H;D;H;H;H;D;H];
+[H;D;H;D;H;D;H];
+[H;D;H;D;D;D;H];
+[H;D;H;H;H;H;H];
+[H;D;D;D;D;D;D];
+[H;H;H;H;H;H;H]]
+
+let base = [
+[D;H;D;H];
+[H;H;H;H];
+[D;D;D;D]]
 
 (*
    These two functions provided to you. Study how they work before continuing!
