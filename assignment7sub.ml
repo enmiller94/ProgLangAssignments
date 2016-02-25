@@ -125,6 +125,7 @@ consisting of the concatenation of the strings produced by each row. The rows al
 newline characters. You do not need to add any extra newlines. Reference solution is 1 line. 
 Should have type: `pic -> string`
 *)
+let string_of_pic pic = List.fold_right (fun rw rest -> (string_of_row rw) ^ rest) pic ("")
 
 (*
 Write a function `flip_vertical` that takes as input a picture and returns a picture that 
