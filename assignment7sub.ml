@@ -29,6 +29,7 @@ consisting of the values of the provided function on the integers `1`
 through `n`. Reference solution is one line. 
 Should have type: `(int -> 'a) -> int -> 'a list` 
 *)
+let tabulate f n = List.map f (range1 n)
 
 (* ---------------------------------
               PICTURES
