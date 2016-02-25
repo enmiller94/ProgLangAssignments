@@ -174,6 +174,7 @@ four copies of the original picture, arranged in a 2x2 format, and each obtained
 flip in that direction. When applied to the sword picture, it should produce four swords emanating from its center. 
 Reference solution is 1 line. Should have type: `pic -> pic`
 *)
+let mirror_both pic = mirror_horizontal (mirror_vertical pic)
 
 (*
 Write a function `pixelate` that takes as input a function `f` of type `int -> int -> pixel` and two 
