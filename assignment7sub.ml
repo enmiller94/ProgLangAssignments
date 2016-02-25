@@ -117,6 +117,7 @@ consisting of the concatenation of strings corresponding to the pixels in the ro
 The resulting string should include a newline `"\n"` at the end. Reference solution 
 is 1 line. Should have type: `row -> string`
 *)
+let string_of_row rw = List.fold_right (fun pxl rest -> (string_of_pxl pxl) ^ rest) rw ("\n")
 
 (*
 Write a function `string_of_pic` that takes as input a picture and returns a string 
