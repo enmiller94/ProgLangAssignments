@@ -166,6 +166,7 @@ image of the first one as produced for example by `flip_horizontal` (but you wil
 call `flip_horizontal`). It will have twice as long rows as the original one. Reference solution is 1 line. 
 Should have type: `pic -> pic`
 *)
+let mirror_horizontal pic = pic @ flip_horizontal pic
 
 (*
 Write a function `mirror_both` that takes as input a picture and returns a picture that contains 
