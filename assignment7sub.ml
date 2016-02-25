@@ -139,6 +139,7 @@ Write a function `flip_horizontal` that takes as input a picture and returns a p
 is a horizontal flip of the original one. Reference solution is 1 line. 
 Should have type: `pic -> pic`
 *)
+let flip_horizontal pic = List.rev pic
 
 (*
 Write a function `flip_both` that takes as input a picture and returns a picture that is a 
