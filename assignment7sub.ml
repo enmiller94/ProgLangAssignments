@@ -147,6 +147,7 @@ Write a function `flip_both` that takes as input a picture and returns a picture
 The order of flips would not matter. Reference solution is 1 line. 
 Should have type: `pic -> pic`
 *)
+let flip_both pic = flip_vertical (flip_horizontal pic)
 
 (*
 Write a function `mirror_vertical` that takes as input a picture and returns a picture that 
