@@ -191,6 +191,10 @@ in a vertical fashion. It should raise the exception `IncompatibleDims` if the p
 number of columns. Reference solution is 2 lines. 
 Should have type: `pic -> pic -> pic`.
 *)
+let stack_vertical pic1 pic2 = let (h1, w1) = (dims_pic pic1) and (h2, w2) = (dims_pic pic2) in
+                                  if w1 = w2
+                                  then pic1 @ pic2
+                                  else raise (IncompatibleDims)
 
 (*
 Write a function `stack_horizontal` that takes as input two pictures and places them next to 
