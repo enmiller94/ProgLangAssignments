@@ -183,6 +183,7 @@ the i-th row and j-th column (in other words the j-th pixel in the i-th row) is 
 of the function `f`. Use `tabulate` from earlier (in two places). Reference solution is 1-2 lines. 
 Should have type: `(int -> int -> pixel) -> int -> int -> pic`
 *)
+let pixelate f m n = List.map (fun row_num -> List.fold_right (fun col_num rest -> (f row_num col_num) :: rest) (tabulate (fun y -> y) n) []) (tabulate (fun x -> x) m)
 
 (*
 Write a function `stack_vertical` that takes as input two pictures and places them one atop the other 
