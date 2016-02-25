@@ -15,7 +15,20 @@
 *)
 let rec range a b = if a > b then [] else a :: range (a + 1) b
 
+(*
+Write a function `range1` that takes as input a single integer as input 
+and returns the list of integers from 1 to that integer. This should be 
+extremely easy. Use `range`. It should have type `int -> int list`.
+*)
+let range1 n = range 1 n
 
+(*
+Write a function `tabulate` that takes as input a function of type 
+`int -> 'a` and also an integer `n` and uses it to generate the `'a list` 
+consisting of the values of the provided function on the integers `1` 
+through `n`. Reference solution is one line. 
+Should have type: `(int -> 'a) -> int -> 'a list` 
+*)
 
 (* ---------------------------------
               PICTURES
@@ -96,7 +109,7 @@ let string_of_pxl pxl =
    if pxl = D
    then "."
    else (* H *) "#" 
-   
+
 (*
 Write a function `string_of_row` that takes as input a row and returns a string 
 consisting of the concatenation of strings corresponding to the pixels in the row.  
