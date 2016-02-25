@@ -68,11 +68,12 @@ let rec count_vars calculation =
    | Int _ -> 0
    | Parity c -> count_vars c
    | Add (c, c') | Sub (c, c') | Mul (c, c') -> let acc = 0 in
-                                                            if has_vars c && has_vars c'
-                                                            then acc + 2
-                                                            else if has_vars c || has_vars c'
-                                                            then acc + 1
-                                                            else acc
+                                                   if has_vars c && has_vars c'
+                                                   then acc + 2
+                                                   else if has_vars c || has_vars c'
+                                                   then acc + 1
+                                                   else acc
+
 
 
 
@@ -252,7 +253,6 @@ let rec poly (lst) =
    - You should detect expressions of any of the four forms
    `b*a + a`, `a*b + a`, `a + b*a`, `a + a*b` and factor out the common factor.
    Make sure to preserve the order of terms on this step.
-
 *)
 let rec simplify c =
    let c' =
@@ -261,17 +261,16 @@ let rec simplify c =
       | Var -> Var 
       | Int i -> Int i 
       (*Addition - 0, regular*)
-      | Add (Int 0, c1) | Add (c1, Int 0) -> c1
-      | Add (c1, c2) -> Add (simplify c1, simplify c2) 
+      | Add (Int 0, c1) | Add (c1, Int 0) -> simplify c1
+      | Add (Int c1, Int c2) -> Int (c1 + c2)
       (*Subtraction - 0, regular*)
       | Sub (c1, Int 0) -> c1
-      (*| Sub (Int 0, c) -> Int (-c)*)
-      | Sub (c1, Int i) -> Add (c1, Int (-i))
-      | Sub (c1, c2) -> Sub (simplify c1, simplify c2)
+      | Sub (Int 0, Int c1) -> Int (-c1)
+      | Sub (Int c1, Int c2) -> Int (c1 - c2)
       (*Multiplication - 0, 1, regular*)
       | Mul (Int 0, c1) | Mul (c1, Int 0) -> Int 0
-      | Mul (Int 1, c1) | Mul (c1, Int 1) -> Int 1
-      | Mul (c1, c2) -> Mul (simplify c1, simplify c2)
+      | Mul (Int 1, c1) | Mul (c1, Int 1) -> c1
+      | Mul (Int c1, Int c2) -> Int (c1 * c2)
       (*Parity*)
       | Parity c1 -> c1
       (*Move Int from second to first*)

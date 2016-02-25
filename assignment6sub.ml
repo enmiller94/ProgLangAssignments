@@ -143,11 +143,12 @@ let rec take n (St th) =
    So for instance when n<=0 the original stream would be returned.
    It should have type `int -> 'a stream -> 'a stream`.
 *)
-let rec drop n (St th) = 
-   if n <= 0 
+let rec drop n (St th) =
+   if n <= 0
    then St th 
-   else let (v, st') = th () in 
-      drop (n - 1) st' 
+   else let (v, st') = th () in
+      drop (n - 1) st'
+
 
 (*
    Write a function `prepend` that takes as input a `'a list` and a `'a stream` and
@@ -156,9 +157,10 @@ let rec drop n (St th) =
    It should have type: `'a list -> 'a stream -> 'a stream`.
 *)
 let rec prepend lst strm =
-   match lst with 
-   | [] -> strm 
-   | element :: rest -> St (fun () -> (element, prepend rest strm)) 
+   match lst with
+   | [] -> strm
+   | element :: rest -> St (fun () -> (element, prepend rest strm))
+
 
 (*
    Write a function `map` that takes as input a function `'a -> 'b` and a `'a stream`,
@@ -262,6 +264,7 @@ let rec flatten (St th) =
 
 
 
+
 (*
    Write a function `list_combos` that takes as input a `'a stream` st1 and a `'b stream`,
    st2 and produces a `('a * 'b) list stream` st as follows: The n-th value of the result
@@ -293,6 +296,3 @@ let rec flatten (St th) =
    solution.
    It should have type: 'a stream -> 'b stream -> ('a * 'b) stream
 *)
-
-
-

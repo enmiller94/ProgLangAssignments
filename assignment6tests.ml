@@ -57,9 +57,7 @@ let t13b = take 3 (collect 3 (seq 1 2)) = [[1; 3; 5]; [7; 9; 11]; [13; 15; 17]]
 let t13c = take 5 (collect 1 (seq 1 1)) = [[1]; [2]; [3]; [4]; [5]]
 
 let t14a = take 5 (flatten (collect 3 (seq 1 1))) = [1; 2; 3; 4; 5]
-<<<<<<< HEAD
 let t14b = take 5 (flatten (collect 3 (seq 1 2))) = [1; 3; 5; 7; 9]
-=======
 
 let t15a = take 4 (list_combos (seq 1 1) (seq 1 1)) =
                   [[(1, 1)]; [(2, 1); (1, 2)]; [(3, 1); (2, 2); (1, 3)];
@@ -97,4 +95,3 @@ let t17b = let odds = seq 1 2 in
            in take 8 (zip2 sums squares) =
                   [(0, 0); (1, 1); (4, 4); (9, 9);
                    (16, 16); (25, 25); (36, 36); (49, 49)]
->>>>>>> instr/master
