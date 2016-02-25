@@ -204,6 +204,8 @@ by either using the function `dims` provided earlier or letting `List.fold_right
 (see documentation) and catching it. Or try them both! Reference solution is 2-4 lines. 
 Should have type: `pic -> pic -> pic`.
 *)
+let stack_horizontal pic1 pic2 = try (List.fold_right2 (fun rw1 rw2 rest -> (rw1 @ rw2) :: rest) pic1 pic2 []) with 
+                                 | _ -> raise (IncompatibleDims) 
 
 (*
 Write a function `invert` that takes as input a picture and returns the same picture with the 
