@@ -157,6 +157,7 @@ is a mirror image of the first one, as produced by `flip_vertical`. You do not h
 Reference solution is 1 line. 
 Should have type: `pic -> pic`
 *)
+let mirror_vertical pic = List.fold_right (fun rw rest -> (rw @ List.rev rw) :: rest) pic []
 
 (*
 Write a function `mirror_horizontal` that takes as input a picture and returns a picture that contains 
