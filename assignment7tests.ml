@@ -106,4 +106,4 @@ let t14a = stack_horizontal base base = [[D;H;D;H;D;H;D;H];[H;H;H;H;H;H;H;H];[D;
 let t15a = invert base = [[H;D;H;D];[D;D;D;D];[H;H;H;H]]
 let t15b = invert [[]] = [[]]
 
-(*let t16a = transpose base = *)
+let t16a = transpose base = [[D;H;D];[H;H;D];[D;H;D];[H;H;D]]

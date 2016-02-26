@@ -224,3 +224,6 @@ manually in a small example how a recursive implementation might function (but y
 solution is not meant to be recursive; this would just help you figure out the kind of work 
 that your `fold_right` would have to do). Should have type: `pic -> pic`
 *)
+let transpose pic = List.fold_right (fun rw rest -> if rest = [] 
+                                                    then List.map (fun pix -> [pix]) rw
+                                                    else List.map2 (fun lst1 lst2 -> lst1 :: lst2) rw rest) pic []

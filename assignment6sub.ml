@@ -286,7 +286,11 @@ let rec flatten (St th) =
    Reference solution is 7 lines.
    It should have type: 'a stream -> 'b stream -> ('a * 'b) list stream
 *)
-
+let list_combos st1 st2 = 
+   let lst1 = List.rev (take 10 st1) in
+      let lst2 = take 10 st2 in 
+         let rec aux 
+         St (fun () -> (lst_a)  ) 
 
 
 (*
@@ -296,3 +300,5 @@ let rec flatten (St th) =
    solution.
    It should have type: 'a stream -> 'b stream -> ('a * 'b) stream
 *)
+let list_combos_flat st1 st2 = 
+   flatten (list_combos st1 st2)
