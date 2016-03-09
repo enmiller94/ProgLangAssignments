@@ -24,3 +24,8 @@ let t1c1 = desugar (BoolS false) = BoolC false
 let t1d0 = evaluate (desugar (BoolS true)) = Bool true
 let t1d1 = evaluate (desugar (BoolS false)) = Bool false
 
+(*CONDITIONAL TESTS*)
+let t2a = evaluate (IfC (BoolC true, NumC 2.3, NumC 4.3)) = Num 2.3
+let t2b = evaluate (IfC (BoolC false, NumC 2.3, NumC 4.3)) = Num 4.3
+let t2c = evaluate (IfC (BoolC 2 = 2, NumC 2.3, NumC 4.3)) = Num 2.3
+(*Need case where exception is hit.*)

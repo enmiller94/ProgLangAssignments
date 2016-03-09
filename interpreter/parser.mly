@@ -7,10 +7,6 @@
 %token DBLSEMI
 %nonassoc FLOAT
 
-
-%token DBLSEMI
-%nonassoc FLOAT
-
 %start main
 %type <Types.exprS> main
 %%
