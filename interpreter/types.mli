@@ -2,10 +2,24 @@ exception Desugar of string      (* Use for desugarer errors *)
 exception Interp of string       (* Use for interpreter errors *)
 
 
-type exprS = NumS of float | BoolS of bool | IfS of (exprS * exprS * exprS) 
-    | OrS of (exprS * exprS) | AndS of (exprS * exprS) | NotS of exprS
-type exprC = NumC of float | BoolC of bool | IfC of (exprC * exprC * exprC) 
-type value = Num of float | Bool of bool 
+type exprS = NumS of float 
+		   | BoolS of bool 
+		   | IfS of exprS * exprS * exprS
+    	   | OrS of exprS * exprS 
+    	   | AndS of exprS * exprS
+    	   | NotS of exprS
+    	   | ArithS of string * exprS * exprS 
+    	   | CompS of string * exprS * exprS 
+           | EqS of exprS * exprS 
+           | NeqS of exprS * exprS 
+type exprC = NumC of float 
+		   | BoolC of bool 
+		   | IfC of exprC * exprC * exprC
+		   | ArithC of string  * exprC * exprC 
+		   | CompC of string * exprC * exprC 
+		   | EqC of exprC * exprC 
+type value = Num of float 
+		   | Bool of bool 
 
 (* Environment lookup *)
 type 'a env
@@ -21,4 +35,4 @@ val evaluate : exprC -> value
 
 
 (* result post-processing *)
-val valToString : value -> string
+val valToString : value -> string 
